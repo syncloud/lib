@@ -1,5 +1,23 @@
 language: python
+env:
+  global:
+    secure: zCkUdxTYwFtmJWOKFKzRyWvjyAMB9tOi6uPTCPd1fTUpmmMKkqjxZl/N3vgRYtUBJnq7nq1rf8p8DFJxk95UQuQmIZ99Q1PA4tg6HMmjEcRmFiIi3lOImaxTtK8N3+rKJ/69R8DWQSo4ELo8Iis+/0WDX57L8vsQP6VBZbtUNzqXRfdPWb23yQZRXLu9nsH276uxUH+Z/bN7yjGpTYw9qRGfLkC4rKOlaX2sUbxx0DgP9q/TIv6CHbqYQdUteLgrr94+JgKOvm9e00KVy+aTWWwhOvsg8Fya/jAHQs+0Z2eVNGY/ZM5K/tSrQrBC6LsvyBiR/LdameHpEbC1bO3ghIs6qxYAyDftlydyl/kaDmcHycgLFziAicNZaeL/ls92d5DBOLQjINGnKkhI+550Y+5qeDqpeGC4kHwVhfbGBg51l8qorik95fwkZcC26hZco0N+0cjR8Cqcygjt1+ax0pBuZZVhRhxc8Tmo+cLynzeJrDy9EbDJGWZuZRgKLfziVR75wvMwaekkzFjL5T7hBLOdNVdqgxjcYIaBMR92aiT4UGH2hxbcw5ZJk6oIQVkWVUFsH7BztXOfXVVJMqQFXotoFy1mrQYVIs1fLNtJ7Gl9G9g5qw7yKB5aOWtfJkqR2Ri3gDdtzk4N50nbFRd6Hls0VZkCvR81p03z72gUw54=
 install:
 - pip install -e .
 script:
 - py.test
+deploy:
+  provider: pypi
+  user: syncloud-build
+  password:
+    secure: IzQIivv8vrkCXnaZUNr3LsIIlMdKKIytMxy0DOapL4TMZQdWYXLxELnnaoktvvjdvXLzK/8ru4IMJpMT1IPtSOSSJvpXE46KJHNRMnVlljnfH/5J9LoOpKIfRh13Mkucxq77rEMh4/OSiDkM22q92LpM+1jZ9GBoT1pSLXiLCEv3Id285zsVWnk5wCssq2XcHMM0Dsw5VXTR+uQQEkhlZPTGmCgwadRaLmCGL0HJWd3wKjXmjSBDUiK70X9SCKYIOdHUsvfO0p9M27fyMmtrBFWVedTrRfPF6O8mZeq76ap4qhgCXybpliUmoi6xpeLQoVVlgLtp7L0J0WINHuzLiUP1GinI4ZTeh/Wx8VWlwMESLxPahzSrlCMcuIbjcLMhjbxBnq5vPF30+oPqpBAKsZt4kwMfoQeDtmXpa55r+I7wYczj82Hz6ZOEV6lDzVgOo6arkDCJXJUKKaYIvmC4hOExw579dLgVSArua0D0ywxMapM9njeFESpbVP+hq77L2CboZxMeopoy6KukTl4Ofk35/J6oor9aULrjzoA2DoPeE8ILO9Llk7d+FQmnEkO5SnKtOFMYFbI4MZiStg9dWZ1lrKCMlf6+ZS71uBTzWpivx+qms5VIXvIApRr2l0eykzA25/x1AG0fXK5WiX4hKnlQVA4EUd6aDNYHlWfJYrQ=
+env:
+- DEVTOOLS_REPO=https://raw.githubusercontent.com/syncloud/dev-tools/master
+after_deploy:
+- wget ${DEVTOOLS_REPO}/version-increment
+- chmod +x version-increment
+- wget ${DEVTOOLS_REPO}/version-push
+- chmod +x version-push
+- "./version-increment version"
+- ./universal-version-push version ${TRAVIS_REPO_SLUG} syncloud-build GH_TOKEN ${TRAVIS_BRANCH}
+  "Travis build [skip ci]"
