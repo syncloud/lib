@@ -1,2 +1,4 @@
+from integration.ssh import run_scp
+
 def test_import():
-    from integration.ssh import run_scp
+    assert True
