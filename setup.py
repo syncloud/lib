@@ -11,7 +11,7 @@ setup(
     name='syncloud-lib',
     version=version,
     install_requires = requirements,
-    description='Python library for Syncloud',
+    description='Syncloud common library',
     packages=['syncloud_app'],
     py_modules = ['convertible'],
     license='GPLv3',
