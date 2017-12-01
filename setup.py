@@ -2,7 +2,8 @@ from setuptools import setup
 from os.path import join, dirname
 
 requirements = [
-    'jsonpickle==0.7.1'
+    'jsonpickle==0.7.1',
+    'requests==2.11.1'
 ]
 
 version = open(join(dirname(__file__), 'version')).read().strip()
