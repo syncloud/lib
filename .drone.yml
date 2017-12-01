@@ -20,6 +20,6 @@ pipeline:
   
   deploy:
     image: syncloud/build-deps-amd64
-    #secrets: [PYPI_LOGIN, PYPI_PASSWORD]
+    secrets: [PYPI_LOGIN, PYPI_PASSWORD]
     commands:
       - ./upload.sh
