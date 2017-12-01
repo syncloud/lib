@@ -1,3 +1,4 @@
+
 platform: linux/amd64
 
 clone:
@@ -19,8 +20,6 @@ pipeline:
   
   deploy:
     image: syncloud/build-deps-amd64
-    #secrets: [PYPI_USER, PYPI_PASSWORD]
+    #secrets: [PYPI_LOGIN, PYPI_PASSWORD]
     commands:
-      #- python setup.py register -r https://www.python.org/pypi
-      - python setup.py sdist upload -r https://$PYPI_USER:$PYPI_PASSWORD@www.python.org/pypi
-    
+      - ./upload.sh
