@@ -2,6 +2,7 @@
 
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
+export HOME=$DIR
 set +x
 cat >$HOME/.pypirc <<EOF
 [distutils]
