@@ -11,6 +11,41 @@ SNAP = 'snap'
 SNAP_INSTALL = '{0} install --devmode'.format(SNAP)
 
 
+def platform_data_dir(installer):
+    if installer == 'sam':
+        return '/opt/data/platform'
+    else:
+        return '/var/snap/platform/common'
+
+
+def data_dir(installer, app):
+    if installer == 'sam':
+        return '/opt/data/{0}'.format(app)
+    else:
+        return '/var/snap/{0}/common'.format(app)
+
+
+def app_dir(installer, app):
+    if installer == 'sam':
+        return '/opt/app/{0}'.format(app)
+    else:
+        return '/snap/{0}/current'.format(app)
+
+
+def service_prefix(installer):
+    if installer == 'sam':
+        return ''
+    else:
+        return 'snap.'
+
+
+def ssh_env_vars(installer):
+    if installer == 'sam':
+        return ''
+    if installer == 'snapd':
+        return 'SNAP_COMMON={0} '.format(SNAPD_DATA_DIR)
+
+
 def local_install(host, password, app_archive_path, installer):
     run_ssh(host, 'ls -la /', password=password)
     _, app_archive = split(app_archive_path)
