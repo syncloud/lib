@@ -11,13 +11,6 @@ SNAP = 'snap'
 SNAP_INSTALL = '{0} install --devmode'.format(SNAP)
 
 
-def get_platform_data_dir(installer):
-    if installer == 'sam':
-        return '/opt/data/platform'
-    else:
-        return '/var/snap/platform/common'
-
-
 def get_data_dir(installer, app):
     if installer == 'sam':
         return '/opt/data/{0}'.format(app)
