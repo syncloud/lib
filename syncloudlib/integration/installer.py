@@ -32,11 +32,11 @@ def get_service_prefix(installer):
         return 'snap.'
 
 
-def get_ssh_env_vars(installer):
+def get_ssh_env_vars(installer, app):
     if installer == 'sam':
         return ''
     if installer == 'snapd':
-        return 'SNAP_COMMON={0} '.format(SNAPD_DATA_DIR)
+        return 'SNAP_COMMON=/var/snap/{0}/common'.format(app)
 
 
 def local_install(host, password, app_archive_path, installer):
