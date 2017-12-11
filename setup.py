@@ -15,7 +15,7 @@ setup(
     version=version,
     install_requires = requirements,
     description='Syncloud common library',
-    packages=['syncloud_app', 'syncloudlib', 'syncloudlib.integration'],
+    packages=['syncloud_app', 'syncloudlib', 'syncloudlib.integration', 'syncloudlib.application'],
     py_modules = ['convertible'],
     license='GPLv3',
     author='Syncloud',
