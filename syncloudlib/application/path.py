@@ -6,7 +6,7 @@ socket_file = '/opt/data/platform/api.socket'.replace('/', '%2F')
 socket = 'http+unix://{0}'.format(socket_file)
 
 
-def get_install_path(app):
+def get_app_dir(app):
     if 'SNAP' in os.environ:
         return '/snap/{0}/current'.format(app)
     else:
