@@ -7,7 +7,7 @@ socket = 'http+unix://{0}'.format(socket_file)
 def get_install_path(app):
     session = requests_unixsocket.Session()
     try:
-        response = session.get('{0}/app/install_path?name='.format(socket, app))
+        response = session.get('{0}/app/install_path?name={1}'.format(socket, app))
         if response.status_code == 200:
             response_json = json.loads(response.text)
             if 'success' in response_json and response_json['success']:
