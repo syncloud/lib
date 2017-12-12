@@ -1,7 +1,7 @@
 import requests_unixsocket
 import json
 
-socket_file = '/opt/data/platform/config/uwsgi/socket/api.wsgi.sock'.replace('/', '%2F')
+socket_file = '/opt/data/platform/api.socket'.replace('/', '%2F')
 socket = 'http+unix://{0}'.format(socket_file)
 
 def get_install_path(app):
