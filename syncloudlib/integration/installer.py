@@ -36,7 +36,7 @@ def get_ssh_env_vars(installer, app):
     if installer == 'sam':
         return ''
     if installer == 'snapd':
-        return 'SNAP_COMMON=/var/snap/{0}/common'.format(app)
+        return 'SNAP={0} SNAP_COMMON={1}'.format(get_app_dir(installer, app), get_data_dir(installer, app))
 
 
 def local_install(host, password, app_archive_path, installer):
