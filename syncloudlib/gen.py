@@ -27,8 +27,8 @@ def generate_file_jinja(from_path, to_path, variables, variable_tags=('{{', '}}'
         fh.write(output.encode("UTF-8"))
 
 
-def generate_files(from_dir, to_dir, variables, variable_tags=('{{', '}}')):
-    if isdir(to_dir):
+def generate_files(from_dir, to_dir, variables, variable_tags=('{{', '}}'), cleanup=True):
+    if cleanup and isdir(to_dir):
         shutil.rmtree(to_dir)
     for dir_name, subdirs, files in os.walk(from_dir):
         for filename in files:
