@@ -7,23 +7,17 @@ socket = 'http+unix://{0}'.format(socket_file)
 
 
 def get_app_dir(app):
-    if 'SNAP' in os.environ:
-        return '/snap/{0}/current'.format(app)
-    else:
-        return '/opt/app/{0}'.format(app)
+    return _query('/app/install_path?name={0}'.format(app))
 
 
 def get_data_dir(app):
-    if 'SNAP' in os.environ:
-        return '/var/snap/{0}/common'.format(app)
-    else:
-        return '/opt/data/{0}'.format(app)
+    return _query('/app/data_path?name={0}'.format(app))
 
 
-def _temp():
+def _query(url):
     session = requests_unixsocket.Session()
     try:
-        response = session.get('{0}/app/install_path?name={1}'.format(socket, app))
+        response = session.get('{0}{1}'.format(socket, url))
         if response.status_code == 200:
             response_json = json.loads(response.text)
             if 'success' in response_json and response_json['success']:
