@@ -1,6 +1,3 @@
-import requests_unixsocket
-import json
-import os
 from connection import request
 
 
