@@ -3,9 +3,10 @@ import json
 import os
 
 if 'SNAP' in os.environ:
-    socket_file '/var/snap/platform/common/api.socket'
+    socket_file = '/var/snap/platform/common/api.socket'
 else:
     socket_file = '/opt/data/platform/api.socket'
+    
 socket = 'http+unix://{0}'.format(socket_file.replace('/', '%2F'))
 
 
