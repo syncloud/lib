@@ -1,9 +1,12 @@
 import requests_unixsocket
 import json
+import os
 
-
-socket_file = '/opt/data/platform/api.socket'.replace('/', '%2F')
-socket = 'http+unix://{0}'.format(socket_file)
+if 'SNAP' in os.environ:
+    socket_file '/var/snap/platform/common/api.socket'
+else:
+    socket_file = '/opt/data/platform/api.socket'
+socket = 'http+unix://{0}'.format(socket_file.replace('/', '%2F'))
 
 
 def request(url):
