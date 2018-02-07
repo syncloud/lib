@@ -5,5 +5,5 @@ def get_app_url(app):
     return api_get('/app/url?name={0}'.format(app))
 
 
-def get_domain_name(app):
+def get_app_domain_name(app):
     return api_get('/app/domain_name?name={0}'.format(app))
