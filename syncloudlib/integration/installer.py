@@ -78,6 +78,9 @@ def wait_for_sam(public_web_session, host):
         print("attempt: {0}/{1}".format(attempt, attempts))
         attempt += 1
         time.sleep(1)
+    
+    if sam_running:
+        raise Exception("time out waiting for sam")
 
 
 def wait_for_rest(public_web_session, host, url, code, attempts=10):
