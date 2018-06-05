@@ -68,7 +68,7 @@ def wait_for_sam(public_web_session, host):
     attempt = 0
     while sam_running and attempt < attempts:
         try:
-            response = public_web_session.get('http://{0}/rest/settings/sam_status'.format(host))
+            response = public_web_session.get('https://{0}/rest/settings/sam_status'.format(host), verify=False)
             if response.status_code == 200:
                 json = convertible.from_json(response.text)
                 sam_running = json.is_running
@@ -86,7 +86,7 @@ def wait_for_rest(public_web_session, host, url, code, attempts=10):
     attempt_limit=attempts
     while attempt < attempt_limit:
         try:
-            response = public_web_session.get('http://{0}{1}'.format(host, url))
+            response = public_web_session.get('https://{0}{1}'.format(host, url), verify=False)
             if response.text:
                 print(response.text)
             print('code: {0}'.format(response.status_code))
