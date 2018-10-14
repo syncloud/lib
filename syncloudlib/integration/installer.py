@@ -5,56 +5,36 @@ from os.path import split
 import convertible
 import requests
 
-SAM = '/opt/app/sam/bin/sam --debug'
-SAM_INSTALL = '{0} install'.format(SAM)
 SNAP = 'snap'
 SNAP_INSTALL = '{0} install --devmode'.format(SNAP)
 
 
-def get_data_dir(installer, app):
-    if installer == 'sam':
-        return '/opt/data/{0}'.format(app)
-    else:
-        return '/var/snap/{0}/common'.format(app)
+def get_data_dir(app):
+    return '/var/snap/{0}/common'.format(app)
 
 
-def get_app_dir(installer, app):
-    if installer == 'sam':
-        return '/opt/app/{0}'.format(app)
-    else:
-        return '/snap/{0}/current'.format(app)
+def get_app_dir(app):
+    return '/snap/{0}/current'.format(app)
 
 
-def get_service_prefix(installer):
-    if installer == 'sam':
-        return ''
-    else:
-        return 'snap.'
+def get_service_prefix():
+    return 'snap.'
 
 
-def get_ssh_env_vars(installer, app):
-    if installer == 'sam':
-        return ''
-    if installer == 'snapd':
-        return 'SNAP={0} SNAP_COMMON={1}'.format(get_app_dir(installer, app), get_data_dir(installer, app))
+def get_ssh_env_vars(app):
+    return 'SNAP={0} SNAP_COMMON={1}'.format(get_app_dir(app), get_data_dir(app))
 
 
-def local_install(host, password, app_archive_path, installer):
+def local_install(host, password, app_archive_path):
     run_ssh(host, 'ls -la /', password=password)
     _, app_archive = split(app_archive_path)
     run_scp('{0} root@{1}:/'.format(app_archive_path, host), password=password, retries=3)
-    cmd = SAM_INSTALL
-    if installer == 'snapd':
-        cmd = SNAP_INSTALL
     run_ssh(host, 'ls -la /{0}'.format(app_archive), password=password)
-    run_ssh(host, '{0} /{1}'.format(cmd, app_archive), password=password)
+    run_ssh(host, '{0} /{1}'.format(SNAP_INSTALL, app_archive), password=password)
 
 
-def local_remove(host, password, installer, app):
-    cmd = SAM
-    if installer == 'snapd':
-        cmd=SNAP
-    run_ssh(host, '{0} remove {1}'.format(cmd, app), password=password)
+def local_remove(host, password, app):
+    run_ssh(host, '{0} remove {1}'.format(SNAP, app), password=password)
 
 
 def wait_for_platform_web(host):
