@@ -3,11 +3,11 @@ from subprocess import check_output, STDOUT, CalledProcessError
 import time
 
 
-def run_scp(command, throw=True, debug=True, password='syncloud', retries=0, sleep=1):
+def run_scp(command, throw=True, debug=True, password='syncloud', retries=0, sleep=1, port=22):
     retry = 0
     while True:
         try:
-            return _run_command('scp -o StrictHostKeyChecking=no {0}'.format(command), throw, debug, password)
+            return _run_command('scp -P {0} -o StrictHostKeyChecking=no {1}'.format(port, command), throw, debug, password)
         except Exception, e:
             if retry >= retries:
                 raise e
@@ -16,12 +16,12 @@ def run_scp(command, throw=True, debug=True, password='syncloud', retries=0, sle
             print('retrying {0}'.format(retry))
 
 
-def run_ssh(host, command, throw=True, debug=True, password='syncloud', retries=0, sleep=1, env_vars=''):
+def run_ssh(host, command, throw=True, debug=True, password='syncloud', retries=0, sleep=1, env_vars='', port=22):
     retry = 0
     while True:
         try:
             command='{0} {1}'.format(env_vars, command)
-            return _run_command('ssh -o StrictHostKeyChecking=no root@{0} "{1}"'.format(host, command), throw, debug, password)
+            return _run_command('ssh -p {0} -o StrictHostKeyChecking=no root@{1} "{2}"'.format(port, host, command), throw, debug, password)
         except Exception, e:
             if retry >= retries:
                 raise e
