@@ -17,6 +17,7 @@ setup(
     description='Syncloud common library',
     packages=['syncloud_app', 'syncloudlib', 'syncloudlib.integration', 'syncloudlib.application'],
     py_modules = ['convertible'],
+    scripts = ['bin/syncloud-upload-artifact.sh'],
     license='GPLv3',
     author='Syncloud',
     author_email='syncloud@syncloud.it',
