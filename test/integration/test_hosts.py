@@ -7,7 +7,7 @@ def test_add_host_alias():
 
     fd, path = tempfile.mkstemp()
     try:
-        add_hosts_alias('localhost', 'test', 'tld', path)
+        add_host_alias('localhost', 'test', 'tld', path)
         with os.fdopen(fd, 'r') as tmp:
             content = tmp.readlines()
             assert 'localhost.tld' in content[0]
