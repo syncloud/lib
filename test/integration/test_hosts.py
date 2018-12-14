@@ -1,4 +1,5 @@
 import os
+import tempfile
 from syncloudlib.integration.hosts import add_host_alias
 
 
