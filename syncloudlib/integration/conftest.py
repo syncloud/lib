@@ -16,6 +16,26 @@ def pytest_addoption(parser):
 
 
 @pytest.fixture(scope='session')
+def device_user():
+    return 'user'
+    
+    
+@pytest.fixture(scope='session')
+def device_password():
+    return 'password'
+    
+
+@pytest.fixture(scope='session')
+def redirect_user():
+    return "teamcity@syncloud.it"
+
+
+@pytest.fixture(scope='session')
+def redirect_password():
+    retrun "password"
+    
+    
+@pytest.fixture(scope='session')
 def app(request):
     return request.config.getoption("--app")
 
