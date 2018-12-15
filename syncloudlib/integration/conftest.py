@@ -32,7 +32,7 @@ def redirect_user():
 
 @pytest.fixture(scope='session')
 def redirect_password():
-    retrun "password"
+    return "password"
     
     
 @pytest.fixture(scope='session')
