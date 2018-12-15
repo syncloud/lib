@@ -1,4 +1,5 @@
 import pytest
+from syncloudlib.integration.installer import get_data_dir, get_app_dir, get_service_prefix
 
 SYNCLOUD_INFO = 'syncloud.info'
 
