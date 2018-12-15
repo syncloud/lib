@@ -78,7 +78,7 @@ def new_profile(user_agent):
 
     return profile
 
-def new_driver(profile):
+def new_driver(profile, log_dir):
 
     firefox_path = '/tools/firefox/firefox'
     caps = DesiredCapabilities.FIREFOX
@@ -87,23 +87,23 @@ def new_driver(profile):
 
     binary = FirefoxBinary(firefox_path)
 
-    return webdriver.Firefox(profile, capabilities=caps, log_path="{0}/firefox.log".format(LOG_DIR),
+    return webdriver.Firefox(profile, capabilities=caps, log_path="{0}/firefox.log".format(log_dir),
                              firefox_binary=binary, executable_path='/tools/geckodriver/geckodriver')
 
 
 @pytest.fixture(scope="module")
-def driver():
+def driver(log_dir):
     profile = new_profile("Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0")
-    driver = new_driver(profile)
+    driver = new_driver(profile, log_dir)
     driver.set_window_position(0, 0)
     driver.set_window_size(1024, 768)
     return driver
     
     
 @pytest.fixture(scope="module")
-def mobile_driver():    
+def mobile_driver(log_dir):    
     profile = new_profile("Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Version/4.0 Mobile/7A341 Safari/528.16")
-    driver = new_driver(profile)
+    driver = new_driver(profile, log_dir)
     driver.set_window_position(0, 0)
     driver.set_window_size(400, 2000)
     return driver
