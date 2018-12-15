@@ -80,10 +80,6 @@ def new_profile(user_agent):
 
 def new_driver(profile):
 
-    if exists(screenshot_dir):
-        shutil.rmtree(screenshot_dir)
-    os.mkdir(screenshot_dir)
-
     firefox_path = '/tools/firefox/firefox'
     caps = DesiredCapabilities.FIREFOX
     caps["marionette"] = True
