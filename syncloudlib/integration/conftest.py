@@ -43,3 +43,23 @@ def device_domain(domain, main_domain):
 @pytest.fixture(scope='session')
 def app_domain(app, device_domain):
     return '{0}.{1}'.format(app, device_domain)
+    
+
+@pytest.fixture(scope="session")
+def platform_data_dir():
+    return get_data_dir('platform')
+
+    
+@pytest.fixture(scope="session")
+def data_dir(app):
+    return get_data_dir(app)
+
+
+@pytest.fixture(scope="session")
+def app_dir(app):
+    return get_app_dir(app)
+    
+
+@pytest.fixture(scope="session")
+def service_prefix():
+    return get_service_prefix()
