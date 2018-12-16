@@ -1,3 +1,5 @@
+from os.path import join
+
 def screenshots(driver, screenshot_dir, name):
  
     driver.get_screenshot_as_file(join(screenshot_dir, '{0}.png'.format(name)))
