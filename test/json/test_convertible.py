@@ -5,7 +5,7 @@ import os
 
 from datetime import datetime
 
-from convertible import from_json, to_json, read_json, write_json, to_dict, Field, List, pretty_print, ugly_print
+from syncloudlib.json.convertible import from_json, to_json, read_json, write_json, to_dict, Field, List, pretty_print, ugly_print
 
 
 class Klass:

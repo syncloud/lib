@@ -15,8 +15,7 @@ setup(
     version=version,
     install_requires = requirements,
     description='Syncloud common library',
-    packages=['syncloud_app', 'syncloudlib', 'syncloudlib.integration', 'syncloudlib.application'],
-    py_modules = ['convertible'],
+    packages=['syncloudlib', 'syncloudlib.integration', 'syncloudlib.application', 'syncloudlib.json'],
     scripts = [
                'bin/syncloud-upload-artifact.sh',
                'bin/syncloud-upload.sh',
