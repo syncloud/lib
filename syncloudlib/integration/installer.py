@@ -2,7 +2,7 @@ import time
 from syncloudlib.integration.ssh import run_scp, run_ssh
 from subprocess import check_output
 from os.path import split
-import convertible
+import json
 import requests
 
 SNAP = 'snap'
@@ -43,15 +43,15 @@ def wait_for_platform_web(host):
 
 
 def wait_for_sam(public_web_session, host):
-    sam_running = True
+    is_running = True
     attempts = 200
     attempt = 0
-    while sam_running and attempt < attempts:
+    while is_running and attempt < attempts:
         try:
             response = public_web_session.get('https://{0}/rest/settings/sam_status'.format(host), verify=False)
             if response.status_code == 200:
-                json = convertible.from_json(response.text)
-                sam_running = json.is_running
+                status = json.loads(response.text)
+                is_running = status['is_running']
         except Exception, e:
             print(e.message)
 
@@ -59,8 +59,8 @@ def wait_for_sam(public_web_session, host):
         attempt += 1
         time.sleep(1)
     
-    if sam_running:
-        raise Exception("time out waiting for sam")
+    if is_running:
+        raise Exception("time out waiting for thr installer")
 
 
 def wait_for_rest(public_web_session, host, url, code, attempts=10):
