@@ -22,4 +22,4 @@ fi
 echo "$ARTIFACT_SSH_KEY" | base64 --decode > artifact_ssh.key
 chmod 600 artifact_ssh.key
 chmod -R a+r $SRC
-scp -r -oStrictHostKeyChecking=no -i artifact_ssh.key $SRC artifact@artifact.syncloud.org:/home/artifact/repo/$APP/ci/$DST
+scp -r -oStrictHostKeyChecking=no -i artifact_ssh.key $SRC/ artifact@artifact.syncloud.org:/home/artifact/repo/$APP/$DST/
