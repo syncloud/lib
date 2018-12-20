@@ -42,13 +42,13 @@ def wait_for_platform_web(host):
     print(check_output('while ! nc -w 1 -z {0} 80; do sleep 1; done'.format(host), shell=True))
 
 
-def wait_for_sam(public_web_session, host):
+def wait_for_installer(web_session, host):
     is_running = True
     attempts = 200
     attempt = 0
     while is_running and attempt < attempts:
         try:
-            response = public_web_session.get('https://{0}/rest/settings/sam_status'.format(host), verify=False)
+            response = web_session.get('https://{0}/rest/settings/sam_status'.format(host), verify=False)
             if response.status_code == 200:
                 status = json.loads(response.text)
                 is_running = status['is_running']
@@ -57,19 +57,19 @@ def wait_for_sam(public_web_session, host):
 
         print("attempt: {0}/{1}".format(attempt, attempts))
         attempt += 1
-        time.sleep(1)
+        time.sleep(10)
     
     if is_running:
         raise Exception("time out waiting for thr installer")
 
 
-def wait_for_rest(public_web_session, host, url, code, attempts=10):
+def wait_for_rest(web_session, host, url, code, attempts=10):
     
     attempt=0
     attempt_limit=attempts
     while attempt < attempt_limit:
         try:
-            response = public_web_session.get('https://{0}{1}'.format(host, url), verify=False)
+            response = web_session.get('https://{0}{1}'.format(host, url), verify=False)
             if response.text:
                 print(response.text)
             print('code: {0}'.format(response.status_code))
@@ -77,7 +77,7 @@ def wait_for_rest(public_web_session, host, url, code, attempts=10):
                 return
         except Exception, e:
             print(e.message)
-        time.sleep(1)
+        time.sleep(10)
         attempt = attempt + 1
 
 
