@@ -131,10 +131,8 @@ def mobile_driver(log_dir):
 
 
 @pytest.fixture(scope='function')
-def device_session(device_host, device_user, device_password):
-    session = requests.session()
-    session.post('https://{0}/rest/login'.format(device_host), data={'name': device_user, 'password': device_password}, verify=False)
-    return session
+def device_session(device):
+    return device.login()
 
 
 @pytest.fixture(scope="module")

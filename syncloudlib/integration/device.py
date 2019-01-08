@@ -21,3 +21,8 @@ class Device():
                                        'device_username': self.device_user,
                                        'device_password': self.device_password})
         return response
+
+    def login(self):
+        session = requests.session()
+        session.post('https://{0}/rest/login'.format(self.device_host), data={'name': self.device_user, 'password': self.device_password}, verify=False)
+        return session
