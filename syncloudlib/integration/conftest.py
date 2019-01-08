@@ -128,3 +128,8 @@ def mobile_driver(log_dir):
     driver.set_window_size(400, 2000)
     return driver
 
+
+@pytest.fixture(scope="module")
+def device(main_domain, device_host, domain, device_user, device_password, redirect_user, redirect_password):
+    return Device(main_domain, device_host, domain, device_user, device_password, redirect_user, redirect_password)
+     
