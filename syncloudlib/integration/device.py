@@ -11,7 +11,7 @@ class Device():
         self.redirect_user = redirect_user
         self.redirect_password = redirect_password
         
-    def activate_device(self):
+    def activate(self):
 
         response = requests.post('http://{0}:81/rest/activate'.format(self.device_host),
                                  data={'main_domain': self.main_domain,
