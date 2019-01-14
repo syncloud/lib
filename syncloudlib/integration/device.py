@@ -12,6 +12,7 @@ class Device():
         self.redirect_user = redirect_user
         self.redirect_password = redirect_password
         self.ssh_env_vars = ssh_env_vars
+        self.ssh_password = 'syncloud'
         
     def activate(self):
 
@@ -22,6 +23,8 @@ class Device():
                                        'user_domain': self.domain,
                                        'device_username': self.device_user,
                                        'device_password': self.device_password})
+        if response.status_code == 200:
+            self.ssh_password = self.device_password
         return response
 
     def login(self, retries=5):
@@ -42,6 +45,6 @@ class Device():
                 print('retry {0} of {1}'.format(retry, retries))
 
     def run_ssh(self, cmd):
-        return run_ssh(self.device_host, cmd, password=self.device_password, env_vars=self.ssh_env_vars)
+        return run_ssh(self.device_host, cmd, password=self.ssh_password, env_vars=self.ssh_env_vars)
 
         
