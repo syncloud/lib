@@ -1,8 +1,9 @@
 import requests
+from syncloudlib.integration.ssh import run_scp, run_ssh
 
 class Device():
 
-    def __init__(self, main_domain, device_host, domain, device_user, device_password, redirect_user, redirect_password):
+    def __init__(self, main_domain, device_host, domain, device_user, device_password, redirect_user, redirect_password, ssh_env_vars):
         self.main_domain = main_domain
         self.device_host = device_host
         self.domain = domain
@@ -10,6 +11,7 @@ class Device():
         self.device_password = device_password
         self.redirect_user = redirect_user
         self.redirect_password = redirect_password
+        self.ssh_env_vars = ssh_env_vars
         
     def activate(self):
 
@@ -39,4 +41,7 @@ class Device():
                 print(e.message)
                 print('retry {0} of {1}'.format(retry, retries))
 
- 
+    def run_ssh(self, cmd):
+        return run_ssh(self.device_host, cmd, password=self.device_password, env_vars=self.ssh_env_vars)
+
+        

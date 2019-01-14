@@ -129,13 +129,16 @@ def mobile_driver(log_dir):
     driver.set_window_size(400, 2000)
     return driver
 
-
+@pytest.fixture(scope="session")
+def ssh_env_vars(app):
+    return get_ssh_env_vars(app)
+   
 @pytest.fixture(scope='function')
 def device_session(device):
     return device.login()
 
 
 @pytest.fixture(scope="module")
-def device(main_domain, device_host, domain, device_user, device_password, redirect_user, redirect_password):
-    return Device(main_domain, device_host, domain, device_user, device_password, redirect_user, redirect_password)
+def device(main_domain, device_host, domain, device_user, device_password, redirect_user, redirect_password, ssh_env_vars):
+    return Device(main_domain, device_host, domain, device_user, device_password, redirect_user, redirect_password, ssh_env_vars)
      
