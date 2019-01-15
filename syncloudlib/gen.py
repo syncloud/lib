@@ -3,7 +3,7 @@ import jinja2
 from os import makedirs
 from os.path import join, dirname, relpath, isdir, split
 import shutil
-
+from string import Template
 
 def generate_file_jinja(from_path, to_path, variables, variable_tags=('{{', '}}')):
     from_path_dir, from_path_filename = split(from_path)
@@ -37,3 +37,12 @@ def generate_files(from_dir, to_dir, variables, variable_tags=('{{', '}}'), clea
             from_rel_path = relpath(from_path, from_dir)
             to_path = join(to_dir, from_rel_path)
             generate_file_jinja(from_path, to_path, variables, variable_tags)
+
+
+def transform_file(from_filename, to_filename, mapping):
+    with open(from_filename, 'r') as from_f:
+        template = Template(from_f.read())
+        runtime = template.substitute(mapping)
+        with open(to_filename, 'w') as to_f:
+            to_f.write(runtime)
+            return to_filename
