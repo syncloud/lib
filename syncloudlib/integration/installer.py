@@ -51,6 +51,9 @@ def wait_for_installer(web_session, host, attempts=200, throw_on_error=False):
             if response.status_code == 200:
                 status = json.loads(response.text)
                 is_running = status['is_running']
+            else:
+                if throw_on_error:
+                    raise Exception("error http status code: {0}".format(response.status_code))
         except Exception, e:
             print(e.message)
             if throw_on_error:
