@@ -42,9 +42,8 @@ def wait_for_platform_web(host):
     print(check_output('while ! nc -w 1 -z {0} 80; do sleep 1; done'.format(host), shell=True))
 
 
-def wait_for_installer(web_session, host):
+def wait_for_installer(web_session, host, attempts=200, throw_on_error=False):
     is_running = True
-    attempts = 200
     attempt = 0
     while is_running and attempt < attempts:
         try:
@@ -54,7 +53,9 @@ def wait_for_installer(web_session, host):
                 is_running = status['is_running']
         except Exception, e:
             print(e.message)
-
+            if throw_on_error:
+                raise e
+            
         print("attempt: {0}/{1}".format(attempt, attempts))
         attempt += 1
         time.sleep(10)
