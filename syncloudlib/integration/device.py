@@ -42,6 +42,11 @@ class Device():
                     raise e
                 print(e.message)
                 print('retry {0} of {1}'.format(retry, retries))
+   
+    def app_remove(self, app):
+        session = self.login()
+        return session.get('https://{0}/rest/remove?app_id={1}'.format(self.device_host, app), allow_redirects=False, verify=False)
+
 
     def run_ssh(self, cmd):
         return run_ssh(self.device_host, cmd, password=self.ssh_password, env_vars=self.ssh_env_vars)
