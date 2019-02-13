@@ -32,6 +32,10 @@ def chownpath(path, user, recursive=False):
 
 
 def chownrecursive(path, user):
+    estimate_count = int(check_output('find {0} -maxdepth 3 | wc -l'.format(path), shell=True))
+    if estimate_count > 1000:
+        return 'not changing permissions, too many files'
+
     return check_output('chown -RLf {0}. {1}'.format(user, path), shell=True)
 
 
