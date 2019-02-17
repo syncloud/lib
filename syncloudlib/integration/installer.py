@@ -68,6 +68,13 @@ def wait_for_installer(web_session, host, attempts=200, throw_on_error=False):
 
 
 def wait_for_rest(web_session, host, url, code, attempts=10):
+    def pred(resp):
+        return resp.status_code == code
+
+    wait_for_resposne(web_session, host, url, pred, attempts)
+        
+
+def wait_for_resposne(web_session, host, url, respPredicate, attempts=10):
     
     attempt=0
     attempt_limit=attempts
@@ -77,7 +84,7 @@ def wait_for_rest(web_session, host, url, code, attempts=10):
             if response.text:
                 print(response.text)
             print('code: {0}'.format(response.status_code))
-            if response.status_code == code:
+            if respPredicate(response):
                 return
         except Exception, e:
             print(e.message)
