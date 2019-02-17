@@ -13,7 +13,8 @@ class Device():
         self.redirect_password = redirect_password
         self.ssh_env_vars = ssh_env_vars
         self.ssh_password = 'syncloud'
-        
+        self.session = None
+
     def activate(self):
 
         response = requests.post('http://{0}:81/rest/activate'.format(self.device_host),
@@ -34,8 +35,9 @@ class Device():
             try:
                 session = requests.session()
                 session.post('https://{0}/rest/login'.format(self.device_host), verify=False, data={'name': self.device_user, 'password': self.device_password})
-                assert session.get('https://{0}/rest/user'.format(self.device_host), verify=False, allow_redirects=False).status_code == 200
-                return session
+                if session.get('https://{0}/rest/user'.format(self.device_host), verify=False, allow_redirects=False).status_code == 200
+                    self.session = session
+                    return session
             except Exception, e:
                 retry += 1
                 if retry > retries:
@@ -44,12 +46,10 @@ class Device():
                 print('retry {0} of {1}'.format(retry, retries))
    
     def app_remove(self, app):
-        session = self.login()
-        return session.get('https://{0}/rest/remove?app_id={1}'.format(self.device_host, app), allow_redirects=False, verify=False)
-
+        return self.session.get('https://{0}/rest/remove?app_id={1}'.format(self.device_host, app), allow_redirects=False, verify=False)
 
     def run_ssh(self, cmd):
         return run_ssh(self.device_host, cmd, password=self.ssh_password, env_vars=self.ssh_env_vars)
 
     def http_get(self, url):
-        return session.get('https://{0}{1}'.format(self.device_host, url), allow_redirects=False, verify=False)
+        return self.session.get('https://{0}{1}'.format(self.device_host, url), allow_redirects=False, verify=False)
