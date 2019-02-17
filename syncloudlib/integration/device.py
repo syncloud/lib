@@ -51,5 +51,5 @@ class Device():
     def run_ssh(self, cmd):
         return run_ssh(self.device_host, cmd, password=self.ssh_password, env_vars=self.ssh_env_vars)
 
-    def http_get(url):
+    def http_get(self, url):
         return session.get('https://{0}{1}'.format(self.device_host, url), allow_redirects=False, verify=False)
