@@ -4,6 +4,7 @@ from subprocess import check_output
 from os.path import split
 import json
 import requests
+import os
 
 SNAP = 'snap'
 SNAP_INSTALL = '{0} install --devmode'.format(SNAP)
@@ -73,6 +74,15 @@ def wait_for_rest(web_session, host, url, code, attempts=10):
 
     wait_for_resposne(web_session, host, url, pred, attempts)
         
+def wait_for_file(file):
+    attempt=0
+    attempt_limit=attempts
+    while attempt < attempt_limit:
+        if os.path.isfile(file):
+            return
+        time.sleep(10)
+        attempt = attempt + 1
+
 
 def wait_for_resposne(web_session, host, url, respPredicate, attempts=10):
     
