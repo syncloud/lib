@@ -74,7 +74,7 @@ def wait_for_rest(web_session, host, url, code, attempts=10):
 
     wait_for_resposne(web_session, host, url, pred, attempts)
         
-def wait_for_file(file):
+def wait_for_file(file, attempts=10):
     attempt=0
     attempt_limit=attempts
     while attempt < attempt_limit:
