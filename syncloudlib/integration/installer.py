@@ -90,6 +90,3 @@ def wait_for_resposne(web_session, host, url, respPredicate, attempts=10):
             print(e.message)
         time.sleep(10)
         attempt = attempt + 1
-
-
-
