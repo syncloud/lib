@@ -35,7 +35,8 @@ class Device():
             try:
                 session = requests.session()
                 session.post('https://{0}/rest/login'.format(self.device_host), verify=False, data={'name': self.device_user, 'password': self.device_password})
-                if session.get('https://{0}/rest/user'.format(self.device_host), verify=False, allow_redirects=False).status_code == 200
+                response = session.get('https://{0}/rest/user'.format(self.device_host), verify=False, allow_redirects=False)
+                if response.status_code == 200:
                     self.session = session
                     return session
             except Exception, e:
