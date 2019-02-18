@@ -84,7 +84,7 @@ def wait_for_file(file, attempts=10):
         attempt = attempt + 1
 
 
-def wait_for_resposne(web_session, host, url, respPredicate, attempts=10):
+def wait_for_response(web_session, host, url, respPredicate, attempts=10):
     
     attempt=0
     attempt_limit=attempts
