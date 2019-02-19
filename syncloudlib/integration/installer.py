@@ -91,8 +91,6 @@ def wait_for_response(web_session, host, url, respPredicate, attempts=10):
     while attempt < attempt_limit:
         try:
             response = web_session.get('https://{0}{1}'.format(host, url), verify=False)
-            if response.text:
-                print(response.text)
             print('code: {0}'.format(response.status_code))
             if respPredicate(response):
                 return
@@ -100,3 +98,6 @@ def wait_for_response(web_session, host, url, respPredicate, attempts=10):
             print(e.message)
         time.sleep(10)
         attempt = attempt + 1
+    if response.text:
+        print(response.text)
+    raise Exception('exhausted')
