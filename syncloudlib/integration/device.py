@@ -49,8 +49,8 @@ class Device():
     def app_remove(self, app):
         return self.session.get('https://{0}/rest/remove?app_id={1}'.format(self.device_host, app), allow_redirects=False, verify=False)
 
-    def run_ssh(self, cmd):
-        return run_ssh(self.device_host, cmd, password=self.ssh_password, env_vars=self.ssh_env_vars)
+    def run_ssh(self, cmd, retries=0):
+        return run_ssh(self.device_host, cmd, password=self.ssh_password, env_vars=self.ssh_env_vars, retries=retries)
     
     def scp_from_device(self, dir_from, dir_to, throw=False):
         return run_scp('root@{0}:{1} {2}'.format(self.device_host, dir_from, dir_to), password=self.ssh_password, throw=throw)
