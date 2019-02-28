@@ -53,10 +53,10 @@ class Device():
         return run_ssh(self.device_host, cmd, password=self.ssh_password, env_vars=self.ssh_env_vars)
     
     def scp_from_device(self, from, to, throw=False):
-        run_scp('root@{0}:{1} {2}'.format(self.device_host, from, to), password=self.ssh_password, throw=throw)
+        return run_scp('root@{0}:{1} {2}'.format(self.device_host, from, to), password=self.ssh_password, throw=throw)
 
     def scp_to_device(self, from, to, throw=False):
-        run_scp('{0} root@{1}:{2}'.format(from, self.device_host, to), password=self.ssh_password, throw=throw)
+        return run_scp('{0} root@{1}:{2}'.format(from, self.device_host, to), password=self.ssh_password, throw=throw)
 
     def http_get(self, url):
         return self.session.get('https://{0}{1}'.format(self.device_host, url), allow_redirects=False, verify=False)
