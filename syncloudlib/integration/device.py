@@ -1,6 +1,6 @@
 import requests
 from syncloudlib.integration.ssh import run_scp, run_ssh
-from syncloudlib.integration.installer import wait_for_platform_web
+from syncloudlib.integration.installer import wait_for_platform_web, wait_for_installer
 
 class Device():
 
@@ -27,7 +27,10 @@ class Device():
                                        'device_password': self.device_password})
         if response.status_code == 200:
             self.ssh_password = self.device_password
+        
+        self.login()
         return response
+
 
     def login(self, retries=5):
     
@@ -49,6 +52,7 @@ class Device():
    
     def app_remove(self, app):
         return self.session.get('https://{0}/rest/remove?app_id={1}'.format(self.device_host, app), allow_redirects=False, verify=False)
+        wait_for_installer(self.session, self.device_host)
 
     def run_ssh(self, cmd, retries=0, throw=True):
         return run_ssh(self.device_host, cmd, password=self.ssh_password, env_vars=self.ssh_env_vars, retries=retries, throw=throw)
