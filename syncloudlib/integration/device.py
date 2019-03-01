@@ -1,5 +1,6 @@
 import requests
 from syncloudlib.integration.ssh import run_scp, run_ssh
+from syncloudlib.integration.installer import wait_for_platform_web
 
 class Device():
 
@@ -16,7 +17,7 @@ class Device():
         self.session = None
 
     def activate(self):
-
+        wait_for_platform_web(self.device_host)
         response = requests.post('http://{0}:81/rest/activate'.format(self.device_host),
                                  data={'main_domain': self.main_domain,
                                        'redirect_email': self.redirect_user,
