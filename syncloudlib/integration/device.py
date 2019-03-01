@@ -51,8 +51,9 @@ class Device():
                 print('retry {0} of {1}'.format(retry, retries))
    
     def app_remove(self, app):
-        return self.session.get('https://{0}/rest/remove?app_id={1}'.format(self.device_host, app), allow_redirects=False, verify=False)
+        response = self.session.get('https://{0}/rest/remove?app_id={1}'.format(self.device_host, app), allow_redirects=False, verify=False)
         wait_for_installer(self.session, self.device_host)
+        return response
 
     def run_ssh(self, cmd, retries=0, throw=True):
         return run_ssh(self.device_host, cmd, password=self.ssh_password, env_vars=self.ssh_env_vars, retries=retries, throw=throw)
