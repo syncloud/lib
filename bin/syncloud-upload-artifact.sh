@@ -14,7 +14,7 @@ APP=$1
 SRC=$2
 DST=$3
 
-if [ ! -d $SRC ]; then
+if [ ! -e $SRC ]; then
     echo "nothing to upload, $SRC does not exist"
     exit 0
 fi
