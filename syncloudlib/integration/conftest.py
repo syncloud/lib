@@ -89,7 +89,8 @@ def app_dir(app):
 @pytest.fixture(scope="session")
 def service_prefix():
     return get_service_prefix()
-    
+
+
 def new_profile(user_agent):
     profile = webdriver.FirefoxProfile()
     profile.add_extension('/tools/firefox/JSErrorCollector.xpi')
@@ -98,6 +99,7 @@ def new_profile(user_agent):
     profile.set_preference("general.useragent.override", user_agent)
 
     return profile
+
 
 def new_driver(profile, log_dir):
 
@@ -117,7 +119,7 @@ def driver(log_dir):
     profile = new_profile("Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0")
     driver = new_driver(profile, log_dir)
     driver.set_window_position(0, 0)
-    driver.set_window_size(1024, 768)
+    driver.set_window_size(1024, 2000)
     return driver
     
     
@@ -129,10 +131,12 @@ def mobile_driver(log_dir):
     driver.set_window_size(400, 2000)
     return driver
 
+
 @pytest.fixture(scope="session")
 def ssh_env_vars(app):
     return get_ssh_env_vars(app)
-   
+
+
 @pytest.fixture(scope='function')
 def device_session(device):
     return device.login()
@@ -141,4 +145,3 @@ def device_session(device):
 @pytest.fixture(scope="session")
 def device(main_domain, device_host, domain, device_user, device_password, redirect_user, redirect_password, ssh_env_vars):
     return Device(main_domain, device_host, domain, device_user, device_password, redirect_user, redirect_password, ssh_env_vars)
-     
