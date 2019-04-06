@@ -97,6 +97,7 @@ def new_profile(user_agent):
     profile.set_preference('app.update.auto', False)
     profile.set_preference('app.update.enabled', False)
     profile.set_preference("general.useragent.override", user_agent)
+    profile.set_preference("devtools.console.stdout.content", True)
 
     return profile
 
