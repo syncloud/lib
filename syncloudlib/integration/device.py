@@ -26,11 +26,13 @@ class Device():
                                        'device_username': self.device_user,
                                        'device_password': self.device_password})
         if response.status_code == 200:
-            self.ssh_password = self.device_password
+            self.activated()
         
         self.login()
         return response
 
+    def activated():
+        self.ssh_password = self.device_password
 
     def login(self, retries=5):
     
