@@ -31,7 +31,7 @@ class Device():
         self.login()
         return response
 
-    def activated():
+    def activated(self):
         self.ssh_password = self.device_password
 
     def login(self, retries=5):
