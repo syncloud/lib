@@ -2,7 +2,8 @@ import requests
 from syncloudlib.integration.ssh import run_scp, run_ssh
 from syncloudlib.integration.installer import wait_for_platform_web, wait_for_installer
 
-class Device():
+
+class Device:
 
     def __init__(self, main_domain, device_host, domain, device_user, device_password, redirect_user, redirect_password, ssh_env_vars):
         self.main_domain = main_domain

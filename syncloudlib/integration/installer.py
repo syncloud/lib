@@ -3,7 +3,6 @@ from syncloudlib.integration.ssh import run_scp, run_ssh
 from subprocess import check_output
 from os.path import split
 import json
-import requests
 import os
 
 SNAP = 'snap'
