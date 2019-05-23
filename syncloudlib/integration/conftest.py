@@ -24,7 +24,7 @@ def device_user():
     
 @pytest.fixture(scope='session')
 def device_password():
-    return 'password'
+    return 'Password1'
     
 
 @pytest.fixture(scope='session')
