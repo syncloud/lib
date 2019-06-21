@@ -58,8 +58,9 @@ class Device:
         wait_for_installer(self.session, self.device_host)
         return response
 
-    def run_ssh(self, cmd, retries=0, throw=True):
-        return run_ssh(self.device_host, cmd, password=self.ssh_password, env_vars=self.ssh_env_vars, retries=retries, throw=throw)
+    def run_ssh(self, cmd, retries=0, throw=True, env_vars=''):
+        ssh_env_vars = self.ssh_env_vars + ' ' + env_vars
+        return run_ssh(self.device_host, cmd, password=self.ssh_password, env_vars=ssh_env_vars, retries=retries, throw=throw)
     
     def scp_from_device(self, dir_from, dir_to, throw=False):
         return run_scp('root@{0}:{1} {2}'.format(self.device_host, dir_from, dir_to), password=self.ssh_password, throw=throw)
