@@ -19,6 +19,8 @@ if [ ! -e $SRC ]; then
     exit 0
 fi
 
+ls -la $SRC
+
 echo "$ARTIFACT_SSH_KEY" | base64 --decode > artifact_ssh.key
 chmod 600 artifact_ssh.key
 chmod -R a+r $SRC

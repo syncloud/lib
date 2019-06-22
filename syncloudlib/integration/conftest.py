@@ -15,11 +15,12 @@ def pytest_addoption(parser):
     parser.addoption("--app-archive-path", action="store")
     parser.addoption("--app", action="store")
     parser.addoption("--ui-mode", action="store", default="desktop")
+    parser.addoption("--device-user", action="store", default="user")
 
 
 @pytest.fixture(scope='session')
 def device_user():
-    return 'user'
+    return request.config.getoption("--device-user")
     
     
 @pytest.fixture(scope='session')
