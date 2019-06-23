@@ -19,7 +19,7 @@ def pytest_addoption(parser):
 
 
 @pytest.fixture(scope='session')
-def device_user():
+def device_user(request):
     return request.config.getoption("--device-user")
     
     
