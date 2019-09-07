@@ -18,6 +18,8 @@ class Device:
         self.session = None
 
     def activate(self):
+        run_ssh(self.device_host, 'snap refresh platform', password=self.ssh_password)
+    
         wait_for_platform_web(self.device_host)
         response = requests.post('http://{0}:81/rest/activate'.format(self.device_host),
                                  data={'main_domain': self.main_domain,
