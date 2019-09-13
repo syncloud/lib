@@ -66,14 +66,6 @@ def wait_for_installer(web_session, host, attempts=200, throw_on_error=False):
     if is_running:
         raise Exception("time out waiting for thr installer")
 
-
-def wait_for_rest(web_session, host, url, code, attempts=10):
-    def pred(resp):
-        return resp.status_code == code
-
-    wait_for_response(web_session, host, url, pred, attempts)
-
-
 def wait_for_file(file, attempts=10):
     attempt=0
     attempt_limit=attempts
@@ -83,22 +75,3 @@ def wait_for_file(file, attempts=10):
         time.sleep(10)
         attempt = attempt + 1
 
-
-def wait_for_response(web_session, host, url, resp_predicate, attempts=10):
-    
-    attempt=0
-    attempt_limit=attempts
-    response = None
-    while attempt < attempt_limit:
-        try:
-            response = web_session.get('https://{0}{1}'.format(host, url), verify=False)
-            print('code: {0}'.format(response.status_code))
-            if resp_predicate(response):
-                return
-        except Exception, e:
-            print(e.message)
-        time.sleep(10)
-        attempt = attempt + 1
-    if response and response.text:
-        print(response.text)
-    raise Exception('exhausted')
