@@ -165,3 +165,29 @@ def device(main_domain, device_host, domain, device_user,
 
     return Device(main_domain, device_host, domain, device_user,
                   device_password, redirect_user, redirect_password, ssh_env_vars)
+
+
+@pytest.fixture(scope="session")
+def log_dir(project_dir):
+    dir = join(project_dir, 'log')
+    if not exists(dir):
+        os.mkdir(dir)
+    return dir
+
+
+@pytest.fixture(scope="session")
+def artifact_dir(project_dir):
+    dir =  join(project_dir, 'artifact')
+    if not exists(dir):
+        os.mkdir(dir)
+    return dir
+
+
+@pytest.fixture(scope="session")
+def screenshot_dir(artifact_dir):
+    dir = join(artifact_dir, 'screenshot')
+    if not exists(dir):
+        os.mkdir(dir)
+    return dir
+
+
