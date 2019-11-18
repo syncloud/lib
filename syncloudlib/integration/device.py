@@ -68,7 +68,7 @@ class Device:
         return run_scp('root@{0}:{1} {2}'.format(self.device_host, dir_from, dir_to), password=self.ssh_password, throw=throw)
 
     def scp_to_device(self, dir_from, dir_to, throw=False):
-        return run_scp('{0} root@{1}:{2}'.format(dir_from, self.device_host, dir_to), password=self.ssh_password, throw=throw)
+        return run_scp('-r {0} root@{1}:{2}'.format(dir_from, self.device_host, dir_to), password=self.ssh_password, throw=throw)
 
     def http_get(self, url):
         return self.session.get('https://{0}{1}'.format(self.device_host, url), allow_redirects=False, verify=False)
