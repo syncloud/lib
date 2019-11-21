@@ -8,7 +8,6 @@ def wait_for_rest(web_session, url, code, attempts=10):
     wait_for_response(web_session, url, pred, attempts)
 
 
-
 def wait_for_response(web_session, url, resp_predicate, attempts=10):
     
     attempt=0
