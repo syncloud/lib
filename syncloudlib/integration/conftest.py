@@ -5,7 +5,7 @@ from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 
-from syncloudlib.integration.installer import get_data_dir, get_app_dir, get_service_prefix, get_ssh_env_vars
+from syncloudlib.integration.installer import get_data_dir, get_app_dir, get_service_prefix, get_ssh_env_vars, get_snap_data_dir
 from syncloudlib.integration.device import Device
 
 SYNCLOUD_INFO = 'syncloud.info'
@@ -89,6 +89,9 @@ def platform_data_dir():
 def data_dir(app):
     return get_data_dir(app)
 
+@pytest.fixture(scope="session")
+def snap_data_dir(app):
+    return get_snap_data_dir(app)
 
 @pytest.fixture(scope="session")
 def app_dir(app):

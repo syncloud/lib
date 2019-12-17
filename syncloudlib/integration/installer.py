@@ -12,6 +12,8 @@ SNAP_INSTALL = '{0} install --devmode'.format(SNAP)
 def get_data_dir(app):
     return '/var/snap/{0}/common'.format(app)
 
+def get_snap_data_dir(app):
+    return '/var/snap/{0}/current'.format(app)
 
 def get_app_dir(app):
     return '/snap/{0}/current'.format(app)
