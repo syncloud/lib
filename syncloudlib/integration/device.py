@@ -17,8 +17,10 @@ class Device:
         self.ssh_password = 'syncloud'
         self.session = None
 
-    def activate(self):
-        run_ssh(self.device_host, 'snap refresh platform', password=self.ssh_password)
+    def activate(self, channel):
+        if not channel:
+            channel = "stable"
+        run_ssh(self.device_host, 'snap refresh platform --channel={0}'.format(channel), password=self.ssh_password)
     
         wait_for_platform_web(self.device_host)
         response = requests.post('http://{0}:81/rest/activate'.format(self.device_host),
