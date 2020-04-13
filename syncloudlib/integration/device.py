@@ -21,7 +21,7 @@ class Device:
         run_ssh(self.device_host, 'snap refresh platform --channel={0}'.format(channel), password=self.ssh_password)
     
         wait_for_platform_web(self.device_host)
-        response = requests.post('http://{0}:81/rest/activate'.format(self.device_host),
+        response = requests.post('https://{0}/rest/activate'.format(self.device_host),
                                  data={'main_domain': self.main_domain,
                                        'redirect_email': self.redirect_user,
                                        'redirect_password': self.redirect_password,
