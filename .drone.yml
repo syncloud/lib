@@ -1,24 +1,31 @@
-platform: linux/amd64
+---
+kind: pipeline
+name: lib
 
-clone:
-  git:
-    image: syncloud/drone-git-amd64
-    depth: 50
+platform:
+  os: linux
+  arch: amd64
 
-pipeline:
-  version:
-    image: syncloud/build-deps-amd64
-    commands:
-      - echo $DRONE_BUILD_NUMBER > version
-      
-  test:
-    image: syncloud/build-deps-amd64
-    commands:
-      - pip install -e .
-      - py.test
-  
-  deploy:
-    image: syncloud/build-deps-amd64
-    secrets: [PYPI_LOGIN, PYPI_PASSWORD]
-    commands:
-      - ./upload.sh
+steps:
+- name: version
+  image: syncloud/build-deps-amd64
+  commands:
+  - "echo $DRONE_BUILD_NUMBER > version"
+
+- name: test
+  image: syncloud/build-deps-amd64
+  commands:
+  - pip install -e .
+  - py.test
+
+- name: deploy
+  image: syncloud/build-deps-amd64
+  commands:
+  - ./upload.sh
+  environment:
+    PYPI_LOGIN:
+      from_secret: PYPI_LOGIN
+    PYPI_PASSWORD:
+      from_secret: PYPI_PASSWORD
+
+...
