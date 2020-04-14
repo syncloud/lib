@@ -27,7 +27,7 @@ class Device:
                                        'redirect_password': self.redirect_password,
                                        'user_domain': self.domain,
                                        'device_username': self.device_user,
-                                       'device_password': self.device_password})
+                                       'device_password': self.device_password}, verify=False)
         if response.status_code == 200:
             self.activated()
         
