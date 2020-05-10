@@ -52,7 +52,7 @@ def to_object(structure, obj_type=None):
                     setattr(obj, field, value)
             return obj
     else:
-        if structure is None or isinstance(structure, (bool, basestring, str, unicode, int, long, float, datetime.datetime)):
+        if structure is None or isinstance(structure, (bool, str, unicode, int, long, float, datetime.datetime)):
             return structure
         if isinstance(structure, list):
             return [to_object(item) for item in structure]
@@ -71,7 +71,7 @@ def to_dict(value):
         for key, value in cloned.items():
             cloned[key] = to_dict(value)
         return cloned
-    if value is None or isinstance(value, (bool, basestring, str, unicode, int, long, float, datetime.datetime)):
+    if value is None or isinstance(value, (bool, str, unicode, int, long, float, datetime.datetime)):
         return value
     result = value.__dict__.copy()
     if hasattr(value, '__public__'):

@@ -48,7 +48,7 @@ class Device:
                 if response.status_code == 200:
                     self.session = session
                     return session
-            except Exception, e:
+            except Exception as e:
                 retry += 1
                 if retry > retries:
                     raise e

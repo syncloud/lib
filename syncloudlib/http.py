@@ -19,7 +19,7 @@ def wait_for_response(web_session, url, resp_predicate, attempts=10):
             print('code: {0}'.format(response.status_code))
             if resp_predicate(response):
                 return
-        except Exception, e:
+        except Exception as e:
             print(e.message)
         time.sleep(10)
         attempt = attempt + 1

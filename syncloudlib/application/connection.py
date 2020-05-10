@@ -19,7 +19,7 @@ def api_post(url, data):
             
         else:
             raise Exception('unable to connect to {0} with error code: {1}'.format(socket, response.status_code))
-    except Exception, e:
+    except Exception as e:
         raise Exception('unable to connect to {0}'.format(socket), e)
 
 
@@ -36,5 +36,5 @@ def api_get(url):
             
         else:
             raise Exception('unable to connect to {0} with error code: {1}'.format(socket, response.status_code))
-    except Exception, e:
+    except Exception as e:
         raise Exception('unable to connect to {0}'.format(socket), e)
