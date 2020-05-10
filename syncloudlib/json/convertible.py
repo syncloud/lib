@@ -1,9 +1,16 @@
+import sys
+
 import jsonpickle
 import os
 import datetime
 import inspect
 
 jsonpickle.set_preferred_backend('json')
+if sys.version_info.major < 3:
+    types = (bool, str, unicode, int, long, float, datetime.datetime)
+else:
+    types = (bool, str, int, long, float, datetime.datetime)
+
 
 def pretty_print():
     jsonpickle.set_encoder_options('json', indent=2)
@@ -52,7 +59,7 @@ def to_object(structure, obj_type=None):
                     setattr(obj, field, value)
             return obj
     else:
-        if structure is None or isinstance(structure, (bool, str, int, long, float, datetime.datetime)):
+        if structure is None or isinstance(structure, types):
             return structure
         if isinstance(structure, list):
             return [to_object(item) for item in structure]
@@ -71,7 +78,7 @@ def to_dict(value):
         for key, value in cloned.items():
             cloned[key] = to_dict(value)
         return cloned
-    if value is None or isinstance(value, (bool, str, int, long, float, datetime.datetime)):
+    if value is None or isinstance(value, types):
         return value
     result = value.__dict__.copy()
     if hasattr(value, '__public__'):
