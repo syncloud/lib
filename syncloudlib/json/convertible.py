@@ -9,7 +9,7 @@ jsonpickle.set_preferred_backend('json')
 if sys.version_info.major < 3:
     types = (bool, str, unicode, int, long, float, datetime.datetime)
 else:
-    types = (bool, str, int, long, float, datetime.datetime)
+    types = (bool, str, int, float, datetime.datetime)
 
 
 def pretty_print():
