@@ -40,8 +40,8 @@ def local_remove(host, password, app):
 
 
 def wait_for_platform_web(host):
-    print(check_output('while ! nc -w 1 -z {0} 81; do sleep 1; done'.format(host), shell=True))
-    print(check_output('while ! nc -w 1 -z {0} 80; do sleep 1; done'.format(host), shell=True))
+    print(check_output('while ! nc -w 1 -z {0} 81; do sleep 1; done'.format(host), shell=True).decode())
+    print(check_output('while ! nc -w 1 -z {0} 80; do sleep 1; done'.format(host), shell=True).decode())
 
 
 def wait_for_installer(web_session, host, attempts=200, throw_on_error=False):
