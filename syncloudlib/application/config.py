@@ -1,4 +1,4 @@
-from connection import api_post, api_get
+from syncloudlib.application.connection import api_post, api_get
 
 
 def set_dkim_key(dkim_key):

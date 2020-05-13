@@ -1,4 +1,4 @@
-from connection import api_post
+from syncloudlib.application.connection import api_post
 
 
 def add_port(port, protocol):

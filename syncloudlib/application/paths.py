@@ -1,4 +1,4 @@
-from connection import api_get
+from syncloudlib.application.connection import api_get
 
 
 def get_app_dir(app):
