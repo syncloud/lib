@@ -10,7 +10,7 @@ def run_scp(command, throw=True, debug=True, password='syncloud', retries=0, sle
             return _run_command('scp -P {0} -o StrictHostKeyChecking=no {1}'.format(port, command), throw, debug, password)
         except Exception as e:
             if retry >= retries:
-                raise e
+                raise
             retry += 1
             time.sleep(sleep)
             print('retrying {0}'.format(retry))
@@ -24,7 +24,7 @@ def run_ssh(host, command, throw=True, debug=True, password='syncloud', retries=
             return _run_command('ssh -p {0} -o StrictHostKeyChecking=no root@{1} "{2}"'.format(port, host, ssh_command), throw, debug, password)
         except Exception as e:
             if retry >= retries:
-                raise e
+                raise
             retry += 1
             time.sleep(sleep)
             print('retrying {0}'.format(retry))
@@ -45,4 +45,4 @@ def _run_command(command, throw, debug, password):
     except CalledProcessError as e:
         print("ssh error: " + e.output.decode())
         if throw:
-            raise e
+            raise
