@@ -43,6 +43,6 @@ def _run_command(command, throw, debug, password):
             print
         return output
     except CalledProcessError as e:
-        print("ssh error: " + e.output)
+        print("ssh error: " + e.output.decode())
         if throw:
             raise e
