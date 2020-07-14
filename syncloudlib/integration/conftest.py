@@ -18,6 +18,13 @@ def pytest_addoption(parser):
     parser.addoption("--app", action="store")
     parser.addoption("--ui-mode", action="store", default="desktop")
     parser.addoption("--device-user", action="store", default="user")
+    parser.addoption("--build-number", action="store", default="local")
+
+
+@pytest.fixture(scope='session')
+def build_number(request):
+    return request.config.getoption("--build-number")
+    
 
 
 @pytest.fixture(scope='session')
