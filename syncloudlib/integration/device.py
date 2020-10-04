@@ -73,8 +73,8 @@ class Device:
     def http_get(self, url):
         return self.session.get('https://{0}{1}'.format(self.device_host, url), allow_redirects=False, verify=False)
 
-    def ssh_link(self, from, to, reverse=False, throw=False):
+    def ssh_link(self, from_link, to_link, reverse=False, throw=False):
         direction = '-L'
         if reverse:
             direction = '-R'
-        return run_link(self.device_host, '{0}{1}:{2}'.format(direction, from, to), password=self.ssh_password, throw=throw)
+        return run_link(self.device_host, '{0}{1}:{2}'.format(direction, from_link, to_link), password=self.ssh_password, throw=throw)
