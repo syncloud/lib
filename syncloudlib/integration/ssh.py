@@ -34,7 +34,7 @@ def run_link(host, command, throw=True, debug=True, password='syncloud', retries
     retry = 0
     while True:
         try:
-            return _run_command('nohup ssh -p {0} -o StrictHostKeyChecking=no -tt {1} root@{2} &'.format(port, command, host), throw, debug, password)
+            return _run_command('ssh -p {0} -o StrictHostKeyChecking=no -fNtt {1} root@{2}'.format(port, command, host), throw, debug, password)
         except Exception as e:
             if retry >= retries:
                 raise
