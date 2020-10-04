@@ -1,5 +1,5 @@
 import requests
-from syncloudlib.integration.ssh import run_scp, run_ssh
+from syncloudlib.integration.ssh import run_scp, run_ssh, run_link
 from syncloudlib.integration.installer import wait_for_platform_web, wait_for_installer
 
 
@@ -72,3 +72,9 @@ class Device:
 
     def http_get(self, url):
         return self.session.get('https://{0}{1}'.format(self.device_host, url), allow_redirects=False, verify=False)
+
+    def ssh_link(self, from, to, reverse=False, throw=False):
+        direction = '-L'
+        if reverse:
+            direction = '-R'
+        return run_link(self.device_host, '{0}{1}:{2}'.format(direction, from, to), password=self.ssh_password, throw=throw)
