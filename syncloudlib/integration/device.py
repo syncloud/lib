@@ -77,4 +77,4 @@ class Device:
         direction = '-L'
         if reverse:
             direction = '-R'
-        return run_link(self.device_host, '{0}{1}:{2}'.format(direction, from_link, to_link), password=self.ssh_password, throw=throw)
+        return run_link(self.device_host, '{0} {1}:{2}'.format(direction, from_link, to_link), password=self.ssh_password, throw=throw)
