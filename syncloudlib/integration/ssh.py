@@ -30,19 +30,6 @@ def run_ssh(host, command, throw=True, debug=True, password='syncloud', retries=
             print('retrying {0}'.format(retry))
 
 
-def run_link(host, command, throw=True, debug=True, password='syncloud', retries=0, sleep=1, port=22):
-    retry = 0
-    while True:
-        try:
-            return _run_command('ssh -p {0} -o StrictHostKeyChecking=no -fN {1} root@{2}'.format(port, command, host), throw, debug, password)
-        except Exception as e:
-            if retry >= retries:
-                raise
-            retry += 1
-            time.sleep(sleep)
-            print('retrying {0}'.format(retry))
-
-
 def ssh_command(password, command):
     return 'sshpass -p {0} {1}'.format(password, command)
 
