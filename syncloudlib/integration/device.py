@@ -45,7 +45,7 @@ class Device:
         while True:
             try:
                 session = requests.session()
-                session.post('https://{0}/rest/login'.format(self.device_host), verify=False,
+                session.post('https://{0}/rest/login'.format(self.device_host), verify=False, allow_redirects=False,
                              json={'username': self.device_user, 'password': self.device_password})
                 response = session.get('https://{0}/rest/user'.format(self.device_host), verify=False,
                                        allow_redirects=False)
