@@ -60,8 +60,9 @@ class Device:
                 print('retry {0} of {1}'.format(retry, retries))
 
     def app_remove(self, app):
-        response = self.session.get('https://{0}/rest/remove?app_id={1}'.format(self.device_host, app),
-                                    allow_redirects=False, verify=False)
+        response = self.session.post('https://{0}/rest/remove'.format(self.device_host), json={'app_id': app}, 
+                                                             verify=False, allow_redirects=False)
+
         wait_for_installer(self.session, self.device_host)
         return response
 
