@@ -26,7 +26,6 @@ def build_number(request):
     return request.config.getoption("--build-number")
     
 
-
 @pytest.fixture(scope='session')
 def device_user(request):
     return request.config.getoption("--device-user")
@@ -133,7 +132,6 @@ def new_driver(profile, log_dir, ui_mode):
                              firefox_binary=binary, executable_path='/tools/geckodriver/geckodriver')
 
 
-
 @pytest.fixture(scope="module")
 def desktop_driver(log_dir, ui_mode):
     profile = new_profile("Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0")
@@ -143,6 +141,14 @@ def desktop_driver(log_dir, ui_mode):
     return driver
     
     
+@pytest.fixture(scope="module")
+def remote_desktop_driver():
+    return webdriver.Remote(
+        command_executor='http://selenium:4444/wd/hub',
+        desired_capabilities={'browserName': 'firefox', 'javascriptEnabled': True}
+    )
+
+
 @pytest.fixture(scope="module")
 def mobile_driver(log_dir, ui_mode):    
     profile = new_profile("Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Version/4.0 Mobile/7A341 Safari/528.16")
@@ -158,7 +164,6 @@ def driver(mobile_driver, desktop_driver, ui_mode):
         return desktop_driver
     else:
         return mobile_driver
-    
 
 
 @pytest.fixture(scope="session")
