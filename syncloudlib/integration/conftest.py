@@ -95,9 +95,11 @@ def platform_data_dir():
 def data_dir(app):
     return get_data_dir(app)
 
+
 @pytest.fixture(scope="session")
 def snap_data_dir(app):
     return get_snap_data_dir(app)
+
 
 @pytest.fixture(scope="session")
 def app_dir(app):
@@ -119,51 +121,36 @@ def new_profile(user_agent):
     return profile
 
 
-def new_driver(profile, log_dir, ui_mode):
+def new_driver(profile):
 
-    firefox_path = '/tools/firefox/firefox'
     caps = DesiredCapabilities.FIREFOX
-    caps["marionette"] = True
     caps['acceptSslCerts'] = True
+    caps['acceptInsecureCerts'] = True
+    caps['javascriptEnabled'] = True
 
-    binary = FirefoxBinary(firefox_path)
-
-    return webdriver.Firefox(profile, capabilities=caps, log_path="{0}/firefox.{1}.log".format(log_dir, ui_mode),
-                             firefox_binary=binary, executable_path='/tools/geckodriver/geckodriver')
+    return webdriver.Remote(
+        command_executor='http://selenium:4444/wd/hub',
+        desired_capabilities=caps,
+        browser_profile=profile
+    )
 
 
 @pytest.fixture(scope="module")
 def desktop_driver(log_dir, ui_mode):
     profile = new_profile("Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0")
-    driver = new_driver(profile, log_dir, ui_mode)
+    driver = new_driver(profile)
     driver.set_window_position(0, 0)
     driver.set_window_size(1024, 2000)
     return driver
     
     
 @pytest.fixture(scope="module")
-def remote_desktop_driver():
-    profile = new_profile("Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0")
-
-    caps = DesiredCapabilities.FIREFOX
-    #caps["marionette"] = True
-    caps['acceptSslCerts'] = True
-    caps['javascriptEnabled'] =True
-    caps['acceptInsecureCerts'] = True
-
-    driver = webdriver.Remote(
-        command_executor='http://selenium:4444/wd/hub',
-        desired_capabilities=caps,
-        browser_profile=profile
-    )
-    driver.set_window_position(0, 0)
-    driver.set_window_size(1024, 2000)
-    return driver 
-
-@pytest.fixture(scope="module")
 def mobile_driver(log_dir, ui_mode):    
-    profile = new_profile("Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Version/4.0 Mobile/7A341 Safari/528.16")
-    driver = new_driver(profile, log_dir, ui_mode)
+    profile = new_profile(
+        "Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 like Mac OS X; en-us) "
+        "AppleWebKit/528.18 (KHTML, like Gecko) "
+        "Version/4.0 Mobile/7A341 Safari/528.16")
+    driver = new_driver(profile)
     driver.set_window_position(0, 0)
     driver.set_window_size(400, 2000)
     return driver
@@ -205,7 +192,7 @@ def log_dir(project_dir):
 
 @pytest.fixture(scope="session")
 def artifact_dir(project_dir):
-    dir =  join(project_dir, 'artifact')
+    dir = join(project_dir, 'artifact')
     if not exists(dir):
         os.mkdir(dir)
     return dir
