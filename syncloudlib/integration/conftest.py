@@ -151,7 +151,7 @@ def remote_desktop_driver():
     caps['javascriptEnabled'] =True
     caps['acceptInsecureCerts'] = True
 
-    driver = ebdriver.Remote(
+    driver = webdriver.Remote(
         command_executor='http://selenium:4444/wd/hub',
         desired_capabilities=caps,
         browser_profile=profile
