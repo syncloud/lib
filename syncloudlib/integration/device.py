@@ -19,6 +19,9 @@ class Device:
         self.ssh_password = 'syncloud'
         self.session = None
 
+    def deactivate(self):
+        run_ssh(self.device_host, 'rm /var/snap/platform/common/platform.db', password=self.ssh_password)
+
     def activate(self, channel="stable"):
         run_ssh(self.device_host, 'snap refresh platform --channel={0}'.format(channel), password=self.ssh_password)
 
