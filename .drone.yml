@@ -10,11 +10,12 @@ steps:
 - name: version
   image: syncloud/build-deps-amd64
   commands:
-  - "echo $DRONE_BUILD_NUMBER > version"
+  - echo $DRONE_BUILD_NUMBER > version
 
 - name: test
   image: syncloud/build-deps-amd64
   commands:
+  - pip install -r test/requirements.txt
   - pip install -e .
   - py.test
 

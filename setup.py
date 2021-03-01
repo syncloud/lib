@@ -1,5 +1,6 @@
-from setuptools import setup
 from os.path import join, dirname
+
+from setuptools import setup
 
 requirements = [
     'jsonpickle==0.7.1',
@@ -13,13 +14,13 @@ version = open(join(dirname(__file__), 'version')).read().strip()
 setup(
     name='syncloud-lib',
     version=version,
-    install_requires = requirements,
+    install_requires=requirements,
     description='Syncloud common library',
     packages=['syncloudlib', 'syncloudlib.integration', 'syncloudlib.application', 'syncloudlib.json'],
-    scripts = [
-               'bin/syncloud-upload-artifact.sh',
-               'bin/syncloud-upload.sh',
-              ],
+    scripts=[
+        'bin/syncloud-upload-artifact.sh',
+        'bin/syncloud-upload.sh',
+    ],
     license='GPLv3',
     author='Syncloud',
     author_email='syncloud@syncloud.it',
