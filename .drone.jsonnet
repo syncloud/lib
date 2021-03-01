@@ -18,7 +18,6 @@
             name: "test",
             image: "syncloud/build-deps-amd64",
             commands: [
-                "pip install -r test/requirements.txt",
                 "pip install -e .",
                 "py.test"
             ]

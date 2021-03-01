@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 
 
-class Selenium:
+class SeleniumWrapper:
     def __init__(self, driver, ui_mode, screenshot_dir, app_domain):
         self.app_domain = app_domain
         self.screenshot_dir = screenshot_dir

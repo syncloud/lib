@@ -6,7 +6,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 from syncloudlib.integration.installer import get_data_dir, get_app_dir, get_service_prefix, get_ssh_env_vars, get_snap_data_dir
 from syncloudlib.integration.device import Device
-from syncloudlib.integration.selenium import Selenium
+from syncloudlib.integration.selenium_wrapper import SeleniumWrapper
 
 SYNCLOUD_INFO = 'syncloud.info'
 
@@ -208,4 +208,4 @@ def screenshot_dir(artifact_dir):
 
 @pytest.fixture(scope="module")
 def selenium(driver, ui_mode, screenshot_dir, app_domain):
-    return Selenium(driver, ui_mode, screenshot_dir, app_domain)
+    return SeleniumWrapper(driver, ui_mode, screenshot_dir, app_domain)
