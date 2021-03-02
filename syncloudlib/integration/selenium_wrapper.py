@@ -1,3 +1,5 @@
+import time
+
 from syncloudlib.integration.screenshots import screenshots
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
@@ -36,7 +38,17 @@ class SeleniumWrapper:
             raise e
 
     def screenshot(self, name):
-        screenshots(self.driver, self.screenshot_dir, '{}-{}'.format(name, self.ui_mode))
+        retries = 5
+        retry = 0
+        while True:
+            try:
+                screenshots(self.driver, self.screenshot_dir, '{}-{}'.format(name, self.ui_mode))
+            except Exception as e:
+                if retry >= retries:
+                    raise
+                retry += 1
+                time.sleep(1)
+                print('retrying screenshot {0}'.format(retry))
 
     def open_app(self):
         self.driver.get("https://{0}".format(self.app_domain))
