@@ -43,6 +43,7 @@ class SeleniumWrapper:
         while True:
             try:
                 screenshots(self.driver, self.screenshot_dir, '{}-{}'.format(name, self.ui_mode))
+                break
             except Exception as e:
                 if retry >= retries:
                     raise
