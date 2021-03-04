@@ -27,7 +27,7 @@ class SeleniumWrapper:
 
     def find_by_css(self, css):
         self.wait_or_screenshot(expected_conditions.presence_of_element_located((By.CSS_SELECTOR, css)))
-        return self.driver.find_element_by_css(css)
+        return self.driver.find_element_by_css_selector(css)
 
     def wait_or_screenshot(self, method):
         wait_driver = WebDriverWait(self.driver, 30)
