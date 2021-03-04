@@ -12,6 +12,7 @@ class SeleniumWrapper:
         self.screenshot_dir = screenshot_dir
         self.ui_mode = ui_mode
         self.driver = driver
+        self.wait_driver = WebDriverWait(self.driver, 30)
 
     def find_by_xpath(self, xpath):
         self.wait_or_screenshot(expected_conditions.presence_of_element_located((By.XPATH, xpath)))
@@ -30,9 +31,8 @@ class SeleniumWrapper:
         return self.driver.find_element_by_css_selector(css)
 
     def wait_or_screenshot(self, method):
-        wait_driver = WebDriverWait(self.driver, 30)
         try:
-            wait_driver.until(method)
+            self.wait_driver.until(method)
         except Exception as e:
             self.screenshot('exception')
             raise e
