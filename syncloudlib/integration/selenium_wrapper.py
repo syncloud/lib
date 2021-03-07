@@ -51,5 +51,5 @@ class SeleniumWrapper:
                 time.sleep(1)
                 print('retrying screenshot {0}'.format(retry))
 
-    def open_app(self):
-        self.driver.get("https://{0}".format(self.app_domain))
+    def open_app(self, path=''):
+        self.driver.get("https://{0}{1}".format(self.app_domain, path))
