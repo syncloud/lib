@@ -39,11 +39,11 @@ def _run_command(command, throw, debug, password):
         print('ssh command: {0}'.format(command))
         output = check_output(ssh_command(password, command), shell=True, stderr=STDOUT).decode('utf-8').strip()
         if debug:
-            print("ssh output: " + output.decode('utf-8'))
+            print("ssh output: " + output.encode('utf-8'))
             print
         return output
     except CalledProcessError as e:
-        print("ssh error: " + e.output.decode('utf-8'))
+        print("ssh error: " + e.output.encode('utf-8'))
         if throw:
             raise
 
