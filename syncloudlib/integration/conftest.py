@@ -130,7 +130,7 @@ def new_driver(profile):
 
     return webdriver.Remote(
         command_executor='http://selenium:4444/wd/hub',
-        desired_capabilities=caps,
+        #desired_capabilities=caps,
         browser_profile=profile
     )
 
