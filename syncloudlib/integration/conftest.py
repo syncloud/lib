@@ -131,8 +131,8 @@ def new_driver(profile):
     caps = DesiredCapabilities.CHROME
     return webdriver.Remote(
         command_executor='http://selenium:4444/wd/hub',
-        desired_capabilities=caps,
-        browser_profile=profile
+        desired_capabilities=caps
+        #, browser_profile=profile
     )
 
 
