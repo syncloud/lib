@@ -37,13 +37,12 @@ def ssh_command(password, command):
 def _run_command(command, throw, debug, password):
     try:
         print('ssh command: {0}'.format(command))
-        output = check_output(ssh_command(password, command), shell=True, stderr=STDOUT).decode('utf-8').strip()
+        output = str(check_output(ssh_command(password, command), shell=True, stderr=STDOUT)).strip()
         if debug:
-            print("ssh output: " + output.encode('utf-8'))
+            print("ssh output: " + str(output)
             print
         return output
     except CalledProcessError as e:
-        print("ssh error: " + e.output.encode('utf-8'))
+        print("ssh error: " + str(e.output))
         if throw:
             raise
-
