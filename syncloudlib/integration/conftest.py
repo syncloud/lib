@@ -209,4 +209,3 @@ def screenshot_dir(artifact_dir):
 @pytest.fixture(scope="module")
 def selenium(driver, ui_mode, screenshot_dir, app_domain):
     return SeleniumWrapper(driver, ui_mode, screenshot_dir, app_domain)
-river, ui_mode, screenshot_dir, app_domain)
