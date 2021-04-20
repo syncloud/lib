@@ -130,8 +130,8 @@ def new_driver(profile):
 
     return webdriver.Remote(
         command_executor='http://selenium:4444/wd/hub',
-        desired_capabilities=caps
-        # browser_profile=profile
+        desired_capabilities=caps,
+        browser_profile=profile
     )
 
 
@@ -207,3 +207,4 @@ def screenshot_dir(artifact_dir):
 @pytest.fixture(scope="module")
 def selenium(driver, ui_mode, screenshot_dir, app_domain):
     return SeleniumWrapper(driver, ui_mode, screenshot_dir, app_domain)
+
