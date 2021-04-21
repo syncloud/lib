@@ -19,6 +19,7 @@
             image: "python:alpine3.13",
             commands: [
                 "pip install -e .",
+                "pip install pytest==6.2.3"
                 "py.test"
             ]
         },
