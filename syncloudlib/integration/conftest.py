@@ -19,6 +19,7 @@ def pytest_addoption(parser):
     parser.addoption("--ui-mode", action="store", default="desktop")
     parser.addoption("--device-user", action="store", default="user")
     parser.addoption("--build-number", action="store", default="local")
+    parser.addoption("--browser", action="store", default="firefox")
 
 
 @pytest.fixture(scope='session')
@@ -72,6 +73,11 @@ def domain(request):
 
 
 @pytest.fixture(scope='session')
+def browser(request):
+    return request.config.getoption("--browser")
+
+
+@pytest.fixture(scope='session')
 def main_domain():
     return SYNCLOUD_INFO
 
@@ -111,45 +117,58 @@ def service_prefix():
     return get_service_prefix()
 
 
-def new_profile(user_agent):
-    profile = webdriver.FirefoxProfile()
-    profile.set_preference('app.update.auto', False)
-    profile.set_preference('app.update.enabled', False)
-    profile.set_preference("general.useragent.override", user_agent)
-    profile.set_preference("devtools.console.stdout.content", True)
+def new_firefox_driver(user_agent, hub_url):
 
-    return profile
-
-
-def new_driver(profile):
-
-    caps = DesiredCapabilities.FIREFOX
+    caps = DesiredCapabilities.FIREFOX.copy()
     caps['acceptSslCerts'] = True
     caps['acceptInsecureCerts'] = True
     caps['javascriptEnabled'] = True
 
+    options = webdriver.FirefoxOptions()
+    options.set_preference('app.update.auto', False)
+    options.set_preference('app.update.enabled', False)
+    options.set_preference("general.useragent.override", user_agent)
+    options.set_preference("devtools.console.stdout.content", True)
+
     return webdriver.Remote(
-        command_executor='http://selenium:4444/wd/hub',
+        command_executor=hub_url,
         desired_capabilities=caps,
-        browser_profile=profile
+        options=options
+    )
+
+
+def new_chrome_driver(user_agent, hub_url):
+
+    caps = DesiredCapabilities.CHROME.copy()
+    caps['javascriptEnabled'] = True
+
+    options = webdriver.ChromeOptions()
+    options.add_argument(f'user-agent={user_agent}')
+
+    return webdriver.Remote(
+        command_executor=hub_url,
+        desired_capabilities=caps,
+        options=options
     )
 
 
 @pytest.fixture(scope="module")
-def driver(ui_mode):    
-    if ui_mode == "desktop":
-        profile = new_profile("Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0")
-        driver = new_driver(profile)
-        driver.set_window_rect(0, 0, 1024, 2000)
-        return driver
+def driver(ui_mode, browser):
+    hub_url = 'http://selenium:4444/wd/hub'
+    user_agent = "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0"
+    width = 1024
+    if ui_mode == "mobile":
+        user_agent = "Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 like Mac OS X; en-us) " \
+                     "AppleWebKit/528.18 (KHTML, like Gecko) " \
+                     "Version/4.0 Mobile/7A341 Safari/528.16"
+        width = 400
+
+    if browser == "firefox":
+        driver = new_firefox_driver(user_agent, hub_url)
     else:
-        profile = new_profile(
-            "Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 like Mac OS X; en-us) "
-            "AppleWebKit/528.18 (KHTML, like Gecko) "
-            "Version/4.0 Mobile/7A341 Safari/528.16")
-        driver = new_driver(profile)
-        driver.set_window_rect(0, 0, 400, 2000)
-        return driver
+        driver = new_chrome_driver(user_agent, hub_url)
+    driver.set_window_rect(0, 0, width, 2000)
+    return driver
 
 
 @pytest.fixture(scope="session")
