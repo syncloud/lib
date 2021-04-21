@@ -16,7 +16,7 @@
         },
         {
             name: "test",
-            image: "syncloud/build-deps-amd64",
+            image: "python:alpine3.13",
             commands: [
                 "pip install -e .",
                 "py.test"
