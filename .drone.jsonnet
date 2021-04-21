@@ -18,6 +18,7 @@
             name: "test",
             image: "python:alpine3.13",
             commands: [
+                "apk update && apk add py-cryptography",
                 "pip install -e .",
                 "pip install -r dev_requirements.txt",
                 "py.test"
