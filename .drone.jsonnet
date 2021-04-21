@@ -18,7 +18,7 @@
             name: "test",
             image: "python:alpine3.13",
             commands: [
-                "apk update && apk add py-cryptography",
+                "apk update && apk add python3-dev gcc libc-dev libffi-dev rust cargo libressl-dev",
                 "pip install -e .",
                 "pip install -r dev_requirements.txt",
                 "py.test"
