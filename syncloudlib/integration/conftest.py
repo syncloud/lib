@@ -144,7 +144,9 @@ def new_chrome_driver(user_agent, hub_url):
 
     options = webdriver.ChromeOptions()
     options.add_argument(f'user-agent={user_agent}')
-
+    options.add_argument('--headless')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
     return webdriver.Remote(
         command_executor=hub_url,
         desired_capabilities=caps,
