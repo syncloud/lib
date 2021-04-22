@@ -141,6 +141,7 @@ def new_chrome_driver(user_agent, hub_url):
 
     caps = DesiredCapabilities.CHROME.copy()
     caps['javascriptEnabled'] = True
+    caps['acceptInsecureCerts'] = True
 
     options = webdriver.ChromeOptions()
     options.add_argument(f'user-agent={user_agent}')
