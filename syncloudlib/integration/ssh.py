@@ -37,7 +37,7 @@ def ssh_command(password, command):
 def _run_command(command, throw, debug, password):
     try:
         print('ssh command: {0}'.format(command))
-        output = str(check_output(ssh_command(password, command), shell=True, stderr=STDOUT)).strip()
+        output = str(check_output(ssh_command(password, command), shell=True, stderr=STDOUT, encoding='UTF-8')).strip()
         if debug:
             print("ssh output: " + str(output))
             print
