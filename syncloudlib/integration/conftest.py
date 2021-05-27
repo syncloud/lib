@@ -144,7 +144,7 @@ def new_chrome_driver(user_agent, hub_url):
     caps['acceptInsecureCerts'] = True
 
     options = webdriver.ChromeOptions()
-    options.add_argument(f'user-agent={user_agent}')
+    options.add_argument('user-agent={}'.format(user_agent))
     options.add_argument('--headless')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
