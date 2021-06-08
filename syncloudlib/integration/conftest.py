@@ -209,8 +209,8 @@ def artifact_dir(project_dir):
 
 
 @pytest.fixture(scope="session")
-def screenshot_dir(artifact_dir):
-    dir = join(artifact_dir, 'screenshot')
+def screenshot_dir(artifact_dir, ui_mode):
+    dir = join(artifact_dir, ui_mode, 'screenshot')
     if not exists(dir):
         os.mkdir(dir)
     return dir
