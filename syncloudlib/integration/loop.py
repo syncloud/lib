@@ -31,6 +31,5 @@ def loop_device_add(host, fs, dev_file, password):
     print('adding loop device')
     run_ssh(host, 'dd if=/dev/zero bs=1M count=10 of={0}'.format(dev_file), password=password)
     loop = run_ssh(host, 'losetup -f --show {0}'.format(dev_file), password=password)
-    run_ssh(host, 'file -s {0}'.format(loop), password=password) 
     run_ssh(host, 'mkfs.{0} {1}'.format(fs, loop), password=password)
     return loop 
