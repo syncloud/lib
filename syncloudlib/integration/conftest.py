@@ -20,6 +20,8 @@ def pytest_addoption(parser):
     parser.addoption("--device-user", action="store", default="user")
     parser.addoption("--build-number", action="store", default="local")
     parser.addoption("--browser", action="store", default="firefox")
+    parser.addoption("--redirect-user", action="store", default="redirect-user-notset")
+    parser.addoption("--redirect-password", action="store", default="redirect-password-notset")
 
 
 @pytest.fixture(scope='session')
@@ -38,13 +40,13 @@ def device_password():
     
 
 @pytest.fixture(scope='session')
-def redirect_user():
-    return "teamcity@syncloud.it"
+def redirect_user(request):
+    return request.config.getoption("--redirect-user")
 
 
 @pytest.fixture(scope='session')
-def redirect_password():
-    return "password"
+def redirect_password(request):
+    return request.config.getoption("--redirect-password")
     
     
 @pytest.fixture(scope='session')
