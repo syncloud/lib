@@ -39,6 +39,20 @@ class Device:
         self.login()
         return response
 
+    def activate_custom(self, channel="stable"):
+        run_ssh(self.device_host, 'snap refresh platform --channel={0}'.format(channel), password=self.ssh_password)
+
+        wait_for_platform_web(self.device_host)
+        response = requests.post('https://{0}/rest/activate_custom_domain'.format(self.device_host),
+                                 json={'full_domain': self.domain,
+                                       'device_username': self.device_user,
+                                       'device_password': self.device_password}, verify=False)
+        if response.status_code == 200:
+            self.activated()
+
+        self.login()
+        return response
+
     def activated(self):
         self.ssh_password = self.device_password
 
