@@ -187,10 +187,9 @@ def device_session(device):
 
 
 @pytest.fixture(scope="session")
-def device(main_domain, device_host, domain, device_user,
+def device(device_host, device_domain, device_user,
            device_password, redirect_user, redirect_password, ssh_env_vars):
-
-    return Device(main_domain, device_host, domain, device_user,
+    return Device(device_host, device_domain, device_user,
                   device_password, redirect_user, redirect_password, ssh_env_vars)
 
 

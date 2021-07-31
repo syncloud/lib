@@ -6,9 +6,8 @@ from syncloudlib.integration.ssh import run_scp, run_ssh
 
 class Device:
 
-    def __init__(self, main_domain, device_host, domain, device_user, device_password, redirect_user, redirect_password,
+    def __init__(self, device_host, domain, device_user, device_password, redirect_user, redirect_password,
                  ssh_env_vars):
-        self.main_domain = main_domain
         self.device_host = device_host
         self.domain = domain
         self.device_user = device_user
@@ -26,31 +25,28 @@ class Device:
         run_ssh(self.device_host, 'snap refresh platform --channel={0}'.format(channel), password=self.ssh_password)
 
         wait_for_platform_web(self.device_host)
-        response = requests.post('https://{0}/rest/activate'.format(self.device_host),
-                                 json={'main_domain': self.main_domain,
-                                       'redirect_email': self.redirect_user,
+        response = requests.post('https://{0}/rest/activate/managed'.format(self.device_host),
+                                 json={'redirect_email': self.redirect_user,
                                        'redirect_password': self.redirect_password,
-                                       'user_domain': self.domain,
+                                       'domain': self.domain,
                                        'device_username': self.device_user,
                                        'device_password': self.device_password}, verify=False)
         if response.status_code == 200:
             self.activated()
-
-        self.login()
+            self.login()
         return response
 
     def activate_custom(self, channel="stable"):
         run_ssh(self.device_host, 'snap refresh platform --channel={0}'.format(channel), password=self.ssh_password)
 
         wait_for_platform_web(self.device_host)
-        response = requests.post('https://{0}/rest/activate_custom_domain'.format(self.device_host),
-                                 json={'full_domain': self.domain,
+        response = requests.post('https://{0}/rest/activate/custom'.format(self.device_host),
+                                 json={'domain': self.domain,
                                        'device_username': self.device_user,
                                        'device_password': self.device_password}, verify=False)
         if response.status_code == 200:
             self.activated()
-
-        self.login()
+            self.login()
         return response
 
     def activated(self):
@@ -70,11 +66,11 @@ class Device:
                     self.session = session
                     return session
             except Exception as e:
-                retry += 1
-                if retry > retries:
-                    raise e
                 print(str(e))
                 print('retry {0} of {1}'.format(retry, retries))
+            retry += 1
+            if retry > retries:
+                raise Exception('cannot login')
 
     def app_remove(self, app):
         response = self.session.post('https://{0}/rest/remove'.format(self.device_host), json={'app_id': app}, 
