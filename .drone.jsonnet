@@ -25,7 +25,7 @@
         },
         {
             name: "deploy",
-            image: "python:3.9-buster",
+            image: "python:3.7-buster",
             environment: {
                 PYPI_LOGIN: {
                     from_secret: "PYPI_LOGIN"
