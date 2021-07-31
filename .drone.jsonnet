@@ -9,16 +9,15 @@
     steps: [
         {
             name: "version",
-            image: "syncloud/build-deps-amd64",
+            image: "debian:buster-slim",
             commands: [
                 "echo $DRONE_BUILD_NUMBER > version"
             ]
         },
         {
             name: "test",
-            image: "python:alpine3.13",
+            image: "python:3.9-buster",
             commands: [
-                "apk update && apk add python3-dev gcc libc-dev libffi-dev rust cargo libressl-dev",
                 "pip install -e .",
                 "pip install -r dev_requirements.txt",
                 "py.test"
@@ -26,7 +25,7 @@
         },
         {
             name: "deploy",
-            image: "syncloud/build-deps-amd64",
+            image: "python:3.9-buster",
             environment: {
                 PYPI_LOGIN: {
                     from_secret: "PYPI_LOGIN"
