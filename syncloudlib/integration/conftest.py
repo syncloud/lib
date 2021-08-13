@@ -175,9 +175,9 @@ def device_session(device):
 
 
 @pytest.fixture(scope="session")
-def device(device_host, device_domain, device_user,
+def device(device_host, domain, device_user,
            device_password, redirect_user, redirect_password, ssh_env_vars):
-    return Device(device_host, device_domain, device_user,
+    return Device(device_host, domain, device_user,
                   device_password, redirect_user, redirect_password, ssh_env_vars)
 
 
@@ -211,4 +211,3 @@ def screenshot_dir(artifact_dir, ui_mode):
 @pytest.fixture(scope="module")
 def selenium(driver, ui_mode, screenshot_dir, app_domain):
     return SeleniumWrapper(driver, ui_mode, screenshot_dir, app_domain)
-
