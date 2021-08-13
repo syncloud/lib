@@ -8,8 +8,6 @@ from syncloudlib.integration.installer import get_data_dir, get_app_dir, get_ser
 from syncloudlib.integration.device import Device
 from syncloudlib.integration.selenium_wrapper import SeleniumWrapper
 
-SYNCLOUD_INFO = 'syncloud.info'
-
 
 def pytest_addoption(parser):
     parser.addoption("--domain", action="store")
@@ -80,18 +78,8 @@ def browser(request):
 
 
 @pytest.fixture(scope='session')
-def main_domain():
-    return SYNCLOUD_INFO
-
-
-@pytest.fixture(scope='session')
-def device_domain(domain, main_domain):
-    return '{0}.{1}'.format(domain, main_domain)
-
-
-@pytest.fixture(scope='session')
-def app_domain(app, device_domain):
-    return '{0}.{1}'.format(app, device_domain)
+def app_domain(app, domain):
+    return '{0}.{1}'.format(app, domain)
     
 
 @pytest.fixture(scope="session")
