@@ -7,11 +7,11 @@ def test_add_host_alias():
 
     fd, path = tempfile.mkstemp()
     try:
-        add_host_alias('app', 'localhost', 'tld', path)
+        add_host_alias('app', 'localhost', 'example.com', path)
         with os.fdopen(fd, 'r') as tmp:
             content = tmp.readlines()
-            assert 'localhost.tld' in content[0]
-            assert 'app.localhost.tld' in content[1]
+            assert content[0].endswith(' example.com')
+            assert content[1].endswith(' app.example.com')
     finally:
         os.remove(path)
     
