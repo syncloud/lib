@@ -93,4 +93,3 @@ class Device:
 
     def http_get(self, url):
         return self.session.get('https://{0}{1}'.format(self.domain, url), allow_redirects=False, verify=False)
-alse, verify=False)
