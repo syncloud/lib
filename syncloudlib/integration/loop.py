@@ -18,7 +18,7 @@ class MountEntry:
 
 def loop_device_cleanup(host, dev_file, password):
     print('cleanup')
-    for mount in parse_mount(run_ssh(host, 'mount', password=password).splitlines()):
+    for mount in parse_mount(run_ssh(host, 'mount', password=password)):
         if dev_file == mount.device:
             run_ssh(host, 'umount {0}'.format(mount.device), throw=False, password=password)
 
