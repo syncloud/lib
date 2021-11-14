@@ -10,7 +10,7 @@ from syncloudlib.integration.selenium_wrapper import SeleniumWrapper
 
 
 def pytest_addoption(parser):
-    parser.addoption("--domain", action="store")
+    parser.addoption("--domain", action="store", default="device.com")
     parser.addoption("--device-host", action="store")
     parser.addoption("--app-archive-path", action="store")
     parser.addoption("--app", action="store")
@@ -63,8 +63,11 @@ def app_archive_path(request):
 
 
 @pytest.fixture(scope='session')
-def device_host(request):
-    return request.config.getoption("--device-host")
+def device_host(request, app, domain):
+    device_host = request.config.getoption("--device-host")
+    if device_host:
+        return device_host
+    return '{0}.{1}'.format(app, domain)
 
 
 @pytest.fixture(scope='session')
