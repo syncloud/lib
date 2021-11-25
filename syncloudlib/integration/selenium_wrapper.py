@@ -38,7 +38,7 @@ class SeleniumWrapper:
             raise e
 
     def screenshot(self, name):
-        retries = 5
+        retries = 120
         retry = 0
         while True:
             try:
