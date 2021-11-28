@@ -12,7 +12,7 @@ class SeleniumWrapper:
         self.screenshot_dir = screenshot_dir
         self.ui_mode = ui_mode
         self.driver = driver
-        self.wait_driver = WebDriverWait(self.driver, 120)
+        self.wait_driver = WebDriverWait(self.driver, 300)
 
     def find_by_xpath(self, xpath):
         self.wait_or_screenshot(expected_conditions.presence_of_element_located((By.XPATH, xpath)))
