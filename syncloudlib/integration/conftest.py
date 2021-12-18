@@ -81,6 +81,11 @@ def browser(request):
 
 
 @pytest.fixture(scope='session')
+def distro(request):
+    return request.config.getoption("--distro")
+
+
+@pytest.fixture(scope='session')
 def app_domain(app, domain):
     return '{0}.{1}'.format(app, domain)
     
