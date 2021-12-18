@@ -20,7 +20,7 @@ def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
     parser.addoption("--redirect-user", action="store", default="redirect-user-notset")
     parser.addoption("--redirect-password", action="store", default="redirect-password-notset")
-
+    parser.addoption("--distro", action="store", default="distro")
 
 @pytest.fixture(scope='session')
 def build_number(request):
@@ -193,8 +193,8 @@ def log_dir(project_dir):
 
 
 @pytest.fixture(scope="session")
-def artifact_dir(project_dir):
-    dir = join(project_dir, 'artifact')
+def artifact_dir(project_dir, distro):
+    dir = join(project_dir, 'artifact', distro)
     if not exists(dir):
         os.mkdir(dir)
     return dir
