@@ -78,6 +78,13 @@ class Device:
         wait_for_installer(self.session, self.domain)
         return response
 
+    def app_install(self, app):
+        response = self.session.post('https://{0}/rest/install'.format(self.domain), json={'app_id': app}, 
+                                                             verify=False, allow_redirects=False)
+
+        wait_for_installer(self.session, self.domain)
+        return response
+
     def run_ssh(self, cmd, retries=0, throw=True, env_vars='', debug=True):
         ssh_env_vars = self.ssh_env_vars + ' ' + env_vars
         return run_ssh(self.domain, cmd, password=self.ssh_password, env_vars=ssh_env_vars, retries=retries,
