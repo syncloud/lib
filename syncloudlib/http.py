@@ -20,7 +20,7 @@ def wait_for_response(web_session, url, resp_predicate, attempts=10):
             if resp_predicate(response):
                 return
         except Exception as e:
-            print(e.message)
+            print(str(e))
         time.sleep(10)
         attempt = attempt + 1
     if response and response.text:
