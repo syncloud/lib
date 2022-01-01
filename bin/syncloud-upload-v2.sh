@@ -18,8 +18,13 @@ BUCKET=apps.syncloud.org
 
 if [ "${BRANCH}" == "master" ] || [ "${BRANCH}" == "stable" ] ; then
 
+  sha384sum $FILE | awk '{ print $1 }' > $FILE.sha384
+  stat --printf="%s" $FILE > $FILE.size
+
   s3cmd put $FILE s3://${BUCKET}/apps/$FILE
-  
+  s3cmd put $FILE.sha384 s3://${BUCKET}/apps/$FILE.sha384
+  s3cmd put $FILE.size s3://${BUCKET}/apps/$FILE.size
+
   if [ "${BRANCH}" == "stable" ]; then
     BRANCH=rc
   fi
