@@ -21,9 +21,10 @@ setup(
         'bin/syncloud-upload-artifact.sh',
         'bin/syncloud-upload.sh',
         'bin/syncloud-upload-v2.sh',
-        'bin/syncloud-upromote.sh',
+        'bin/syncloud-promote.sh',
     ],
     license='GPLv3',
     author='Syncloud',
     author_email='syncloud@syncloud.it',
     url='https://github.com/syncloud/lib')
+
