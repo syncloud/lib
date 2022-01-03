@@ -20,6 +20,8 @@ setup(
     scripts=[
         'bin/syncloud-upload-artifact.sh',
         'bin/syncloud-upload.sh',
+        'bin/syncloud-upload-v2.sh',
+        'bin/syncloud-upromote.sh',
     ],
     license='GPLv3',
     author='Syncloud',
