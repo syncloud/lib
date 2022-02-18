@@ -6,6 +6,7 @@ requirements = [
     'jsonpickle==0.7.1',
     'requests==2.26.0',
     'Jinja2==2.9.6',
+    'MarkupSafe==2.0.1',
     'requests-unixsocket==0.1.5'
 ]
 
