@@ -121,6 +121,7 @@ def new_firefox_driver(user_agent, hub_url):
     caps['acceptSslCerts'] = True
     caps['acceptInsecureCerts'] = True
     caps['javascriptEnabled'] = True
+    caps['se:recordVideo'] = True
 
     options = webdriver.FirefoxOptions()
     options.set_preference('app.update.auto', False)
@@ -140,10 +141,11 @@ def new_chrome_driver(user_agent, hub_url):
     caps = DesiredCapabilities.CHROME.copy()
     caps['javascriptEnabled'] = True
     caps['acceptInsecureCerts'] = True
+    caps['se:recordVideo'] = True
 
     options = webdriver.ChromeOptions()
     options.add_argument('user-agent={}'.format(user_agent))
-    options.add_argument('--headless')
+    #options.add_argument('--headless')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
     return webdriver.Remote(
