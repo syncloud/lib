@@ -21,6 +21,7 @@ def pytest_addoption(parser):
     parser.addoption("--redirect-user", action="store", default="redirect-user-notset")
     parser.addoption("--redirect-password", action="store", default="redirect-password-notset")
     parser.addoption("--distro", action="store", default="distro")
+    parser.addoption("--arch", action="store", default="unset-arch")
 
 @pytest.fixture(scope='session')
 def build_number(request):
@@ -83,6 +84,11 @@ def browser(request):
 @pytest.fixture(scope='session')
 def distro(request):
     return request.config.getoption("--distro")
+
+
+@pytest.fixture(scope='session')
+def arch(request):
+    return request.config.getoption("--arch")
 
 
 @pytest.fixture(scope='session')
