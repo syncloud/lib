@@ -5,6 +5,7 @@ from os.path import join, dirname, relpath, isdir, split
 import shutil
 from string import Template
 
+
 def generate_file_jinja(from_path, to_path, variables, variable_tags=('{{', '}}')):
     from_path_dir, from_path_filename = split(from_path)
     loader = jinja2.FileSystemLoader(searchpath=from_path_dir)

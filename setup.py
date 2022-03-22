@@ -18,12 +18,6 @@ setup(
     install_requires=requirements,
     description='Syncloud common library',
     packages=['syncloudlib', 'syncloudlib.integration', 'syncloudlib.application', 'syncloudlib.json'],
-    scripts=[
-        'bin/syncloud-upload-artifact.sh',
-        'bin/syncloud-upload.sh',
-        'bin/syncloud-upload-v2.sh',
-        'bin/syncloud-promote.sh',
-    ],
     license='GPLv3',
     author='Syncloud',
     author_email='syncloud@syncloud.it',
