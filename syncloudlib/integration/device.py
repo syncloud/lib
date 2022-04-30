@@ -71,18 +71,18 @@ class Device:
             if retry > retries:
                 raise Exception('cannot login')
 
-    def app_remove(self, app):
+    def app_remove(self, app, attempts=200):
         response = self.session.post('https://{0}/rest/remove'.format(self.domain), json={'app_id': app},
                                      verify=False, allow_redirects=False)
 
-        wait_for_installer(self.session, self.domain, attempts=120)
+        wait_for_installer(self.session, self.domain, attempts=attempts)
         return response
 
-    def app_install(self, app):
+    def app_install(self, app, attempts=200):
         response = self.session.post('https://{0}/rest/install'.format(self.domain), json={'app_id': app},
                                      verify=False, allow_redirects=False)
 
-        wait_for_installer(self.session, self.domain, attempts=120)
+        wait_for_installer(self.session, self.domain, attempts=attempts)
         return response
 
     def run_ssh(self, cmd, retries=0, throw=True, env_vars='', debug=True):
