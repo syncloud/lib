@@ -15,19 +15,19 @@ class SeleniumWrapper:
         self.wait_driver = WebDriverWait(self.driver, 300)
 
     def find_by_xpath(self, xpath):
-        self.wait_or_screenshot(expected_conditions.presence_of_element_located((By.XPATH, xpath)))
+        self.wait_or_screenshot(expected_conditions.visibility_of_element_located((By.XPATH, xpath)))
         return self.driver.find_element_by_xpath(xpath)
 
     def find_by_name(self, name):
-        self.wait_or_screenshot(expected_conditions.presence_of_element_located((By.NAME, name)))
+        self.wait_or_screenshot(expected_conditions.visibility_of_element_located((By.NAME, name)))
         return self.driver.find_element_by_name(name)
 
     def find_by_id(self, field_id):
-        self.wait_or_screenshot(expected_conditions.presence_of_element_located((By.ID, field_id)))
+        self.wait_or_screenshot(expected_conditions.visibility_of_element_located((By.ID, field_id)))
         return self.driver.find_element_by_id(field_id)
 
     def find_by_css(self, css):
-        self.wait_or_screenshot(expected_conditions.presence_of_element_located((By.CSS_SELECTOR, css)))
+        self.wait_or_screenshot(expected_conditions.visibility_of_element_located((By.CSS_SELECTOR, css)))
         return self.driver.find_element_by_css_selector(css)
 
     def wait_or_screenshot(self, method):
