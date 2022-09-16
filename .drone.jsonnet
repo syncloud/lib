@@ -19,7 +19,7 @@
             image: "python:3.8-slim-buster",
             commands: [
                 "pip install -e .",
-                "pip install -r dev_requirements.txt",
+                "pip install -r requirements.txt",
                 "py.test"
             ]
         },
