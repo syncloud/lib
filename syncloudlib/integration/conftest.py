@@ -165,16 +165,16 @@ def new_chrome_driver(user_agent, hub_url):
 def driver(ui_mode, browser):
     hub_url = 'http://selenium:4444/wd/hub'
     user_agent = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:104.0) Gecko/20100101 Firefox/100.0"
-    width = 1024
+    # width = 1024
     if ui_mode == "mobile":
         user_agent = "Mozilla/5.0 (Android 4.4; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0"
-        width = 400
+        # width = 400
 
     if browser == "firefox":
         driver = new_firefox_driver(user_agent, hub_url)
     else:
         driver = new_chrome_driver(user_agent, hub_url)
-    driver.set_window_rect(0, 0, width, 2000)
+    # driver.set_window_rect(0, 0, width, 2000)
     return driver
 
 
