@@ -31,7 +31,8 @@ class SeleniumWrapper:
         return self.driver.find_element(by, value)
 
     def exists_by(self, by, value):
-        return self.wait_or_screenshot(expected_conditions.visibility_of_element_located((by, value)))
+        cond = expected_conditions.visibility_of_element_located((by, value))
+        return self.wait_or_screenshot(cond, throw=False)
 
     def wait_or_screenshot(self, method, throw=True):
         try:
