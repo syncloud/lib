@@ -30,14 +30,21 @@ class SeleniumWrapper:
         self.wait_or_screenshot(expected_conditions.visibility_of_element_located((by, value)))
         return self.driver.find_element(by, value)
 
-    def wait_or_screenshot(self, method):
+    def exists_by(self, by, value):
+        return self.wait_or_screenshot(expected_conditions.visibility_of_element_located((by, value)))
+
+    def wait_or_screenshot(self, method, throw=True):
         try:
             self.wait_driver.until(method)
+            return True
         except Exception as e:
-            self.screenshot('exception')
-            raise e
+            self.screenshot('exception', throw)
+            if throw:
+                raise e
+            else:
+                return False
 
-    def screenshot(self, name):
+    def screenshot(self, name, throw=True):
         retries = 5
         retry = 0
         while True:
@@ -46,7 +53,10 @@ class SeleniumWrapper:
                 break
             except Exception as e:
                 if retry >= retries:
-                    raise
+                    if throw:
+                        raise
+                    else:
+                        return
                 retry += 1
                 time.sleep(1)
                 print('retrying screenshot {0}'.format(retry))
