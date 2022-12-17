@@ -52,7 +52,7 @@ def wait_for_installer(web_session, host, attempts=60, throw_on_error=False):
             response = web_session.get('https://{0}/rest/installer/status'.format(host), verify=False)
             if response.status_code == 200:
                 status = json.loads(response.text)
-                is_running = status['is_running']
+                is_running = status['data']['is_running']
             else:
                 if throw_on_error:
                     raise Exception("error http status code: {0}".format(response.status_code))
