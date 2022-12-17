@@ -49,7 +49,7 @@ def wait_for_installer(web_session, host, attempts=60, throw_on_error=False):
     attempt = 0
     while is_running and attempt < attempts:
         try:
-            response = web_session.get('https://{0}/rest/settings/installer_status'.format(host), verify=False)
+            response = web_session.get('https://{0}/rest/installer/status'.format(host), verify=False)
             if response.status_code == 200:
                 status = json.loads(response.text)
                 is_running = status['is_running']
@@ -76,4 +76,3 @@ def wait_for_file(file, attempts=10):
             return
         time.sleep(10)
         attempt = attempt + 1
-
