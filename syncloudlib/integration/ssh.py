@@ -13,6 +13,7 @@ def run_scp(command, throw=True, debug=True, password='syncloud', retries=0, sle
                 raise
             retry += 1
             time.sleep(sleep)
+            sleep = sleep * 2
             print('retrying {0}'.format(retry))
 
 
@@ -27,6 +28,7 @@ def run_ssh(host, command, throw=True, debug=True, password='syncloud', retries=
                 raise
             retry += 1
             time.sleep(sleep)
+            sleep = sleep * 2
             print('retrying {0}'.format(retry))
 
 
