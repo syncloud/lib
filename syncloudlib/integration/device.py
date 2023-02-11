@@ -2,7 +2,7 @@ import requests
 
 from syncloudlib.integration.installer import wait_for_platform_web, wait_for_installer
 from syncloudlib.integration.ssh import run_scp, run_ssh
-
+from requests.adapters import HTTPAdapter 
 
 class Device:
 
@@ -54,11 +54,11 @@ class Device:
         self.ssh_password = self.device_password
 
     def login(self, retries=5):
-
+        session = requests.session()
+        session.mount('https://{0}'.format(self.domain), HTTPAdapter(max_retries=retries)) 
         retry = 0
         while True:
             try:
-                session = requests.session()
                 session.post('https://{0}/rest/login'.format(self.domain), verify=False, allow_redirects=False,
                              json={'username': self.device_user, 'password': self.device_password})
                 response = session.get('https://{0}/rest/user'.format(self.domain), verify=False,
