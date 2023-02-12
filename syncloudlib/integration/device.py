@@ -1,6 +1,7 @@
 import requests
 
 from syncloudlib.integration.installer import wait_for_platform_web, wait_for_installer
+from syncloudlib.http import wait_for_rest
 from syncloudlib.integration.ssh import run_scp, run_ssh
 from requests.adapters import HTTPAdapter 
 
@@ -24,7 +25,8 @@ class Device:
         run_ssh(self.domain, '/snap/platform/current/bin/upgrade-snapd.sh {0}'.format(channel), password=self.ssh_password)
         run_ssh(self.domain, 'snap refresh platform --channel={0}'.format(channel), password=self.ssh_password)
 
-        wait_for_platform_web(self.domain)
+        wait_for_rest(requests.session(), "https://{0}/rest/id".format(self.domain), 200, 10)
+
         response = requests.post('https://{0}/rest/activate/managed'.format(self.domain),
                                  json={'redirect_email': self.redirect_user,
                                        'redirect_password': self.redirect_password,
@@ -40,7 +42,7 @@ class Device:
         run_ssh(self.domain, '/snap/platform/current/bin/upgrade-snapd.sh {0}'.format(channel), password=self.ssh_password)
         run_ssh(self.domain, 'snap refresh platform --channel={0}'.format(channel), password=self.ssh_password)
 
-        wait_for_platform_web(self.domain)
+        wait_for_rest(requests.session(), "https://{0}/rest/id".format(self.domain), 200, 10)
         response = requests.post('https://{0}/rest/activate/custom'.format(self.domain),
                                  json={'domain': self.domain,
                                        'device_username': self.device_user,
