@@ -76,14 +76,14 @@ class Device:
                 raise Exception('cannot login')
 
     def app_remove(self, app, attempts=200):
-        response = self.session.post('https://{0}/rest/remove'.format(self.domain), json={'app_id': app},
+        response = self.session.post('https://{0}/rest/app/remove'.format(self.domain), json={'app_id': app},
                                      verify=False, allow_redirects=False)
 
         wait_for_installer(self.session, self.domain, attempts=attempts)
         return response
 
     def app_install(self, app, attempts=200):
-        response = self.session.post('https://{0}/rest/install'.format(self.domain), json={'app_id': app},
+        response = self.session.post('https://{0}/rest/app/install'.format(self.domain), json={'app_id': app},
                                      verify=False, allow_redirects=False)
 
         wait_for_installer(self.session, self.domain, attempts=attempts)
