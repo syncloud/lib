@@ -174,7 +174,7 @@ def driver(ui_mode, browser):
         driver = new_firefox_driver(user_agent, hub_url)
     else:
         driver = new_chrome_driver(user_agent, hub_url)
-    driver.set_window_rect(0, 0, width, 2000)
+    driver.set_window_rect(0, 0, width, 1000)
     return driver
 
 
