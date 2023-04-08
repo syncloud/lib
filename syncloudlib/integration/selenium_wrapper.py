@@ -7,12 +7,12 @@ from selenium.webdriver.support import expected_conditions
 
 
 class SeleniumWrapper:
-    def __init__(self, driver, ui_mode, screenshot_dir, app_domain):
+    def __init__(self, driver, ui_mode, screenshot_dir, app_domain, timeout):
         self.app_domain = app_domain
         self.screenshot_dir = screenshot_dir
         self.ui_mode = ui_mode
         self.driver = driver
-        self.wait_driver = WebDriverWait(self.driver, 300)
+        self.wait_driver = WebDriverWait(self.driver, timeout)
 
     def find_by_xpath(self, xpath):
         return self.find_by(By.XPATH, xpath)

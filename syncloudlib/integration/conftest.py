@@ -222,6 +222,11 @@ def screenshot_dir(artifact_dir, ui_mode):
     return dir
 
 
+@pytest.fixture(scope="session")
+def selenium_timeout():
+    return 300
+
+
 @pytest.fixture(scope="module")
-def selenium(driver, ui_mode, screenshot_dir, app_domain):
-    return SeleniumWrapper(driver, ui_mode, screenshot_dir, app_domain)
+def selenium(driver, ui_mode, screenshot_dir, app_domain, selenium_timeout):
+    return SeleniumWrapper(driver, ui_mode, screenshot_dir, app_domain, selenium_timeout)
