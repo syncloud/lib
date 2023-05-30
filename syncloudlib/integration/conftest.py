@@ -84,7 +84,7 @@ def browser(request):
 
 @pytest.fixture(scope='session')
 def browser_height(request):
-    return request.config.getoption("--browser-height")
+    return int(request.config.getoption("--browser-height"))
 
 
 @pytest.fixture(scope='session')
