@@ -18,6 +18,7 @@ def pytest_addoption(parser):
     parser.addoption("--device-user", action="store", default="user")
     parser.addoption("--build-number", action="store", default="local")
     parser.addoption("--browser", action="store", default="firefox")
+    parser.addoption("--browser-height", action="store", default=1000)
     parser.addoption("--redirect-user", action="store", default="redirect-user-notset")
     parser.addoption("--redirect-password", action="store", default="redirect-password-notset")
     parser.addoption("--distro", action="store", default="distro")
@@ -79,6 +80,11 @@ def domain(request):
 @pytest.fixture(scope='session')
 def browser(request):
     return request.config.getoption("--browser")
+
+
+@pytest.fixture(scope='session')
+def browser_height(request):
+    return request.config.getoption("--browser-height")
 
 
 @pytest.fixture(scope='session')
@@ -162,7 +168,7 @@ def new_chrome_driver(user_agent, hub_url):
 
 
 @pytest.fixture(scope="module")
-def driver(ui_mode, browser):
+def driver(ui_mode, browser, browser_height):
     hub_url = 'http://selenium:4444/wd/hub'
     user_agent = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:104.0) Gecko/20100101 Firefox/100.0"
     width = 1024
@@ -174,7 +180,7 @@ def driver(ui_mode, browser):
         driver = new_firefox_driver(user_agent, hub_url)
     else:
         driver = new_chrome_driver(user_agent, hub_url)
-    driver.set_window_rect(0, 0, width, 1000)
+    driver.set_window_rect(0, 0, width, browser_height)
     return driver
 
 
