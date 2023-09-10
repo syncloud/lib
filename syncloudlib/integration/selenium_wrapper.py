@@ -30,6 +30,10 @@ class SeleniumWrapper:
         self.wait_or_screenshot(expected_conditions.visibility_of_element_located((by, value)))
         return self.driver.find_element(by, value)
 
+    def click_by(self, by, value):
+        self.wait_or_screenshot(expected_conditions.element_to_be_clickable((by, value)))
+        self.driver.find_element(by, value).click()
+
     def exists_by(self, by, value, timeout=10):
         driver = WebDriverWait(self.driver, timeout)
         cond = expected_conditions.visibility_of_element_located((by, value))
