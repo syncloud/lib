@@ -27,14 +27,16 @@ class SeleniumWrapper:
         return self.find_by(By.CSS_SELECTOR, css)
 
     def find_by(self, by, value):
-        self.wait_or_screenshot(expected_conditions.visibility_of_element_located((by, value)))
+        #self.wait_or_screenshot(expected_conditions.visibility_of_element_located((by, value)))
+        self.wait_or_screenshot(expected_conditions.presence_of_element_located((by, value)))
         return self.driver.find_element(by, value)
 
     def invisible_by(self, by, value):
         self.wait_or_screenshot(expected_conditions.invisibility_of_element_located((by, value)))
 
     def click_by(self, by, value):
-        self.wait_or_screenshot(expected_conditions.element_to_be_clickable((by, value)))
+        #self.wait_or_screenshot(expected_conditions.element_to_be_clickable((by, value)))
+        self.wait_or_screenshot(expected_conditions.presence_of_element_located((by, value)))
         self.driver.find_element(by, value).click()
 
     def exists_by(self, by, value, timeout=10):
