@@ -4,6 +4,7 @@ from syncloudlib.integration.installer import wait_for_platform_web, wait_for_in
 from syncloudlib.http import wait_for_rest
 from syncloudlib.integration.ssh import run_scp, run_ssh
 from requests.adapters import HTTPAdapter 
+import socket
 
 class Device:
 
@@ -22,6 +23,8 @@ class Device:
         run_ssh(self.domain, 'rm /var/snap/platform/common/platform.db', password=self.ssh_password)
 
     def activate(self, channel="stable"):
+        ip = socket.gethostbyname(self.domain)
+        run_ssh(self.domain, 'echo '{0} auth.{1}' >> /etc/hosts'.format(ip, domain), password=self.ssh_password, retries=10)
         run_ssh(self.domain, '/snap/platform/current/bin/upgrade-snapd.sh {0}'.format(channel), password=self.ssh_password, retries=10)
         run_ssh(self.domain, 'snap refresh platform --channel={0}'.format(channel), password=self.ssh_password, retries=10)
 
@@ -39,6 +42,8 @@ class Device:
         return response
 
     def activate_custom(self, channel="stable"):
+        ip = socket.gethostbyname(self.domain)
+        run_ssh(self.domain, 'echo '{0} auth.{1}' >> /etc/hosts'.format(ip, domain), password=self.ssh_password, retries=10)
         run_ssh(self.domain, '/snap/platform/current/bin/upgrade-snapd.sh {0}'.format(channel), password=self.ssh_password, retries=10)
         run_ssh(self.domain, 'snap refresh platform --channel={0}'.format(channel), password=self.ssh_password, retries=10)
 
