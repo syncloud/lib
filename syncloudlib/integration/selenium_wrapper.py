@@ -7,11 +7,12 @@ from selenium.webdriver.support import expected_conditions
 
 
 class SeleniumWrapper:
-    def __init__(self, driver, ui_mode, screenshot_dir, app_domain, timeout):
+    def __init__(self, driver, ui_mode, screenshot_dir, app_domain, timeout, browser):
         self.app_domain = app_domain
         self.screenshot_dir = screenshot_dir
         self.ui_mode = ui_mode
         self.driver = driver
+        self.browser = browser
         self.wait_driver = WebDriverWait(self.driver, timeout)
 
     def find_by_xpath(self, xpath):
@@ -46,7 +47,6 @@ class SeleniumWrapper:
     def present_by(self, by, value):
         self.wait_or_screenshot(expected_conditions.presence_of_element_located((by, value)))
         return self.driver.find_element(by, value)
-
 
     def exists_by(self, by, value, timeout=10):
         driver = WebDriverWait(self.driver, timeout)
@@ -88,3 +88,16 @@ class SeleniumWrapper:
 
     def open_app(self, path=''):
         self.driver.get("https://{0}{1}".format(self.app_domain, path))
+
+    def log(self):
+        if self.browser != "chrome":
+            print("browser logs are only supported in chrome")
+            return
+
+        try:
+            for entry in self.driver.get_log('browser'):
+                print("---")
+                print(entry)
+        except Exception as e:
+            print("error")
+            print(e)

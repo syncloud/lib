@@ -226,5 +226,5 @@ def selenium_timeout():
 
 
 @pytest.fixture(scope="module")
-def selenium(driver, ui_mode, screenshot_dir, app_domain, selenium_timeout):
-    return SeleniumWrapper(driver, ui_mode, screenshot_dir, app_domain, selenium_timeout)
+def selenium(driver, ui_mode, screenshot_dir, app_domain, selenium_timeout, browser):
+    return SeleniumWrapper(driver, ui_mode, screenshot_dir, app_domain, selenium_timeout, browser)
