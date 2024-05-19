@@ -2,7 +2,6 @@ import pytest
 import os
 from os.path import join, exists
 from selenium import webdriver
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 from syncloudlib.integration.installer import get_data_dir, get_app_dir, get_service_prefix, get_ssh_env_vars, get_snap_data_dir
 from syncloudlib.integration.device import Device
@@ -23,6 +22,7 @@ def pytest_addoption(parser):
     parser.addoption("--redirect-password", action="store", default="redirect-password-notset")
     parser.addoption("--distro", action="store", default="distro")
     parser.addoption("--arch", action="store", default="unset-arch")
+
 
 @pytest.fixture(scope='session')
 def build_number(request):
