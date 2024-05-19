@@ -129,40 +129,32 @@ def service_prefix():
 
 def new_firefox_driver(user_agent, hub_url):
 
-    caps = DesiredCapabilities.FIREFOX.copy()
-    caps['acceptSslCerts'] = True
-    caps['acceptInsecureCerts'] = True
-    caps['javascriptEnabled'] = True
-    caps['se:recordVideo'] = True
-
     options = webdriver.FirefoxOptions()
     options.set_preference('app.update.auto', False)
     options.set_preference('app.update.enabled', False)
     options.set_preference("general.useragent.override", user_agent)
     options.set_preference("devtools.console.stdout.content", True)
+    options.set_capability('acceptInsecureCerts', True)
+    options.set_capability('se:recordVideo', True)
 
     return webdriver.Remote(
         command_executor=hub_url,
-        desired_capabilities=caps,
         options=options
     )
 
 
 def new_chrome_driver(user_agent, hub_url):
 
-    caps = DesiredCapabilities.CHROME.copy()
-    caps['javascriptEnabled'] = True
-    caps['acceptInsecureCerts'] = True
-    caps['se:recordVideo'] = True
-
     options = webdriver.ChromeOptions()
     options.add_argument('user-agent={}'.format(user_agent))
     #options.add_argument('--headless')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
+    options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
+    options.set_capability('acceptInsecureCerts', True)
+    options.set_capability('se:recordVideo', True)
     return webdriver.Remote(
         command_executor=hub_url,
-        desired_capabilities=caps,
         options=options
     )
 
