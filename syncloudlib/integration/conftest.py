@@ -159,8 +159,8 @@ def new_chrome_driver(user_agent, hub_url):
     )
 
 
-@pytest.fixture(scope="module")
-def driver(ui_mode, browser, browser_height):
+@pytest.fixture(scope="session")
+def driver(ui_mode, browser, browser_height, request):
     hub_url = 'http://selenium:4444/wd/hub'
     user_agent = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:104.0) Gecko/20100101 Firefox/100.0"
     width = 1024
@@ -173,6 +173,12 @@ def driver(ui_mode, browser, browser_height):
     else:
         driver = new_chrome_driver(user_agent, hub_url)
     driver.set_window_rect(0, 0, width, browser_height)
+
+    def driver_quit():
+        driver.quit()
+
+    request.addfinalizer(driver_quit)
+
     return driver
 
 
@@ -225,6 +231,6 @@ def selenium_timeout():
     return 300
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="session")
 def selenium(driver, ui_mode, screenshot_dir, app_domain, selenium_timeout, browser):
     return SeleniumWrapper(driver, ui_mode, screenshot_dir, app_domain, selenium_timeout, browser)
