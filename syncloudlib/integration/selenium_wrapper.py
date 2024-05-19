@@ -94,10 +94,6 @@ class SeleniumWrapper:
             print("browser logs are only supported in chrome")
             return
 
-        try:
-            for entry in self.driver.get_log('browser'):
-                print("---")
-                print(entry)
-        except Exception as e:
-            print("error")
-            print(e)
+        print("browser log")
+        for entry in self.driver.get_log('browser'):
+            print(entry)
