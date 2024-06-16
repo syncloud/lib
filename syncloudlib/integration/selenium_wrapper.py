@@ -30,7 +30,10 @@ class SeleniumWrapper:
     def find_by(self, by, value):
         #self.wait_or_screenshot(expected_conditions.visibility_of_element_located((by, value)))
         self.wait_or_screenshot(expected_conditions.presence_of_element_located((by, value)))
-        return self.driver.find_element(by, value)
+        try:
+            return self.driver.find_element(by, value)
+        except Exception as e:
+            self.screenshot('exception', True)
 
     def invisible_by(self, by, value):
         self.wait_or_screenshot(expected_conditions.invisibility_of_element_located((by, value)))
