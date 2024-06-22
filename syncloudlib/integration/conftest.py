@@ -127,12 +127,15 @@ def service_prefix():
     return get_service_prefix()
 
 
-def new_firefox_driver(user_agent, hub_url):
-
+def new_firefox_driver(hub_url, ui_mode):
+    #desktop_agent = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:104.0) Gecko/20100101 Firefox/100.0"
+    mobile_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_1_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Mobile/15E148 Safari/604.1"
+        
     options = webdriver.FirefoxOptions()
     options.set_preference('app.update.auto', False)
     options.set_preference('app.update.enabled', False)
-    options.set_preference("general.useragent.override", user_agent)
+    if ui_mode == "mobile":
+        options.set_preference("general.useragent.override", mobile_agent)
     options.set_preference("devtools.console.stdout.content", True)
     options.set_capability('acceptInsecureCerts', True)
     options.set_capability('se:recordVideo', True)
@@ -143,10 +146,13 @@ def new_firefox_driver(user_agent, hub_url):
     )
 
 
-def new_chrome_driver(user_agent, hub_url):
-
+def new_chrome_driver(hub_url, ui_mode):
+    #desktop_agent = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:104.0) Gecko/20100101 Firefox/100.0"
+    mobile_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_1_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Mobile/15E148 Safari/604.1"
+ 
     options = webdriver.ChromeOptions()
-    options.add_argument('user-agent={}'.format(user_agent))
+    if ui_mode == "mobile":
+        options.add_argument('user-agent={}'.format(mobile_agent))
     #options.add_argument('--headless')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
@@ -162,16 +168,14 @@ def new_chrome_driver(user_agent, hub_url):
 @pytest.fixture(scope="session")
 def driver(ui_mode, browser, browser_height, request):
     hub_url = 'http://selenium:4444/wd/hub'
-    user_agent = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:104.0) Gecko/20100101 Firefox/100.0"
     width = 1024
     if ui_mode == "mobile":
-        user_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_1_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Mobile/15E148 Safari/604.1"
         width = 400
 
     if browser == "firefox":
-        driver = new_firefox_driver(user_agent, hub_url)
+        driver = new_firefox_driver(hub_url, ui_mode)
     else:
-        driver = new_chrome_driver(user_agent, hub_url)
+        driver = new_chrome_driver(hub_url, ui_mode)
     driver.set_window_rect(0, 0, width, browser_height)
 
     def driver_quit():
