@@ -139,6 +139,8 @@ def new_firefox_driver(hub_url, ui_mode):
     options.set_preference("devtools.console.stdout.content", True)
     options.set_capability('acceptInsecureCerts', True)
     options.set_capability('se:recordVideo', True)
+    options.set_preference("media.navigator.streams.fake", True)
+    options.set_preference("media.navigator.permission.disabled", True)
 
     return webdriver.Remote(
         command_executor=hub_url,
@@ -159,6 +161,8 @@ def new_chrome_driver(hub_url, ui_mode):
     options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
     options.set_capability('acceptInsecureCerts', True)
     options.set_capability('se:recordVideo', True)
+    options.add_argument("--use-fake-ui-for-media-stream")
+    options.add_argument("--use-fake-device-for-media-stream")
     return webdriver.Remote(
         command_executor=hub_url,
         options=options
