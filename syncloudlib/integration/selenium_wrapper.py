@@ -27,11 +27,13 @@ class SeleniumWrapper:
     def find_by_css(self, css):
         return self.find_by(By.CSS_SELECTOR, css)
 
-    def find_by(self, by, value):
+    def find_by(self, by, value, parent=None):
+        if not parent:
+            parent = self.driver
         #self.wait_or_screenshot(expected_conditions.visibility_of_element_located((by, value)))
         self.wait_or_screenshot(expected_conditions.presence_of_element_located((by, value)))
         try:
-            return self.driver.find_element(by, value)
+            return parent.find_element(by, value)
         except Exception as e:
             self.screenshot('exception', True)
 
