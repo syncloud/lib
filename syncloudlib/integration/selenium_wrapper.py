@@ -1,5 +1,7 @@
 import time
 
+from retry import retry
+
 from syncloudlib.integration.screenshots import screenshots
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
@@ -111,3 +113,13 @@ class SeleniumWrapper:
         print("browser log")
         for entry in self.driver.get_log('browser'):
             print(entry)
+
+    @retry(exceptions=Exception, tries=10, delay=1, backoff=2)
+    def element_by_js(self, js):
+        try:
+            elem = self.driver.execute_script('return ' + js)
+            self.driver.execute_script("arguments[0].scrollIntoView();", elem)
+            return elem
+        except Exception:
+            self.screenshot('exception')
+            raise
