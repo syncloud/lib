@@ -74,7 +74,7 @@ class SeleniumWrapper:
             self.screenshot('exception', False)
             return False
 
-    @retry(exceptions=Exception, tries=10, delay=1, backoff=2)
+    @retry(exceptions=Exception, tries=3, delay=1, backoff=2)
     def wait_or_screenshot(self, method, throw=True):
         try:
             self.wait_driver.until(method)
@@ -124,3 +124,4 @@ class SeleniumWrapper:
         except Exception:
             self.screenshot('exception')
             raise
+
