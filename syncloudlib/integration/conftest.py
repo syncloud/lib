@@ -236,7 +236,7 @@ def screenshot_dir(artifact_dir, ui_mode):
 
 @pytest.fixture(scope="session")
 def selenium_timeout():
-    return 300
+    return 30
 
 
 @pytest.fixture(scope="session")
