@@ -73,8 +73,11 @@ def device_host(request, app, domain):
 
 
 @pytest.fixture(scope='session')
-def domain(request):
-    return request.config.getoption("--domain")
+def domain(request, distro):
+    domain = request.config.getoption("--domain")
+    if domain:
+        return domain
+    return '{0}.com'.format(distro)
 
 
 @pytest.fixture(scope='session')
