@@ -69,7 +69,7 @@ def device_host(request, app, domain):
     device_host = request.config.getoption("--device-host")
     if device_host:
         return device_host
-    return domain
+    return '{0}.{1}'.format(app, domain)
 
 
 @pytest.fixture(scope='session')
