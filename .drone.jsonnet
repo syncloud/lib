@@ -16,7 +16,7 @@
         },
         {
             name: "test",
-            image: "python:3.8-slim-buster",
+            image: "python:3.10-slim-buster",
             commands: [
                 "pip install -e .",
                 "pip install -r requirements.txt",
@@ -25,7 +25,7 @@
         },
         {
             name: "deploy",
-            image: "python:3.8-slim-buster",
+            image: "python:3.10-slim-buster",
             environment: {
                 PYPI_LOGIN: {
                     from_secret: "PYPI_LOGIN"
