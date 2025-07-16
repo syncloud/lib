@@ -1,3 +1,7 @@
 .idea
 *.iml
 venv
+__pycache__
+dist
+version
+*.egg-info
