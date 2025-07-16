@@ -18,6 +18,6 @@ password: ${PYPI_PASSWORD}
 EOF
 set -x
 
-pip install twine
+pip install twine build
 python -m build
 twine upload dist/*
