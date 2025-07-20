@@ -1,4 +1,7 @@
 from subprocess import check_output, STDOUT, CalledProcessError
+import logging
+log = logging.getLogger()
+log.setLevel(logging.DEBUG)
 
 import time
 
@@ -14,7 +17,7 @@ def run_scp(command, throw=True, debug=True, password='syncloud', retries=0, sle
             retry += 1
             time.sleep(sleep)
             sleep = sleep * 2
-            print('retrying {0}'.format(retry))
+            log.info('retrying {0}'.format(retry))
 
 
 def run_ssh(host, command, throw=True, debug=True, password='syncloud', retries=0, sleep=1, env_vars='', port=22):
@@ -29,7 +32,7 @@ def run_ssh(host, command, throw=True, debug=True, password='syncloud', retries=
             retry += 1
             time.sleep(sleep)
             sleep = sleep * 2
-            print('retrying {0}'.format(retry))
+            log.info('retrying {0}'.format(retry))
 
 
 def ssh_command(password, command):
@@ -38,14 +41,14 @@ def ssh_command(password, command):
 
 def _run_command(command, throw, debug, password):
     try:
-        print('ssh command: {0}'.format(command))
+        log.info('ssh command: {0}'.format(command))
         output = str(check_output(ssh_command(password, command), shell=True, stderr=STDOUT, encoding='UTF-8')).strip()
         if debug:
-            print("ssh output: " + output)
-            print
+            log.info("ssh output: " + output)
+            log.info('')
         return output
     except CalledProcessError as e:
-        print("ssh error: " + str(e.output))
+        log.info("ssh error: " + str(e.output))
         if throw:
             raise
         return str(e.output)
