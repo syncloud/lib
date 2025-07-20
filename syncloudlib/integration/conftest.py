@@ -9,7 +9,7 @@ from syncloudlib.integration.selenium_wrapper import SeleniumWrapper
 
 
 def pytest_addoption(parser):
-    parser.addoption("--domain", action="store", default="device.com")
+    parser.addoption("--domain", action="store")
     parser.addoption("--device-host", action="store")
     parser.addoption("--app-archive-path", action="store")
     parser.addoption("--app", action="store")
