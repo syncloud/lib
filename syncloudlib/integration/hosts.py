@@ -1,7 +1,6 @@
 import socket
 import logging
 log = logging.getLogger()
-log.setLevel(logging.DEBUG)
 
 def add_host_alias(app,  host, domain, hosts_file='/etc/hosts'):
     ip = socket.gethostbyname(host)

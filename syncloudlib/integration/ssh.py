@@ -1,7 +1,6 @@
 from subprocess import check_output, STDOUT, CalledProcessError
 import logging
 log = logging.getLogger()
-log.setLevel(logging.DEBUG)
 
 import time
 
