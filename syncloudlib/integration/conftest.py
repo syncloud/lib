@@ -6,7 +6,14 @@ from selenium import webdriver
 from syncloudlib.integration.installer import get_data_dir, get_app_dir, get_service_prefix, get_ssh_env_vars, get_snap_data_dir
 from syncloudlib.integration.device import Device
 from syncloudlib.integration.selenium_wrapper import SeleniumWrapper
+import logging
+log = logging.getLogger()
 
+snap_arch={
+    "amd64": "amd64",
+    "arm": "armhf",
+    "arm64": "arm64",
+}
 
 def pytest_addoption(parser):
     parser.addoption("--domain", action="store")
@@ -22,6 +29,7 @@ def pytest_addoption(parser):
     parser.addoption("--redirect-password", action="store", default="redirect-password-notset")
     parser.addoption("--distro", action="store", default="distro")
     parser.addoption("--arch", action="store", default="unset-arch")
+    parser.addoption("--version", action="store")
 
 
 @pytest.fixture(scope='session')
@@ -60,8 +68,24 @@ def ui_mode(request):
 
 
 @pytest.fixture(scope='session')
-def app_archive_path(request):
-    return request.config.getoption("--app-archive-path")
+def version(request):
+    return request.config.getoption("--version")
+
+
+@pytest.fixture(scope='session')
+def app_archive_path(request, app, version, arch):
+    archive_path = request.config.getoption("--app-archive-path")
+    if archive_path:
+        return archive_path
+    archive_path = f'{app}_{version}_{arch}.snap'
+    if exists(archive_path):
+        log.info(f'found app archive: {archive_path}')
+        return archive_path
+    archive_path = f'../{archive_path}'
+    if exists(archive_path):
+        log.info(f'found app archive: {archive_path}')
+        return archive_path
+    raise Exception(f'app archive not found: {archive_path}')
 
 
 @pytest.fixture(scope='session')
