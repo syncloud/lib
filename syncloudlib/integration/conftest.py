@@ -29,7 +29,7 @@ def pytest_addoption(parser):
     parser.addoption("--redirect-password", action="store", default="redirect-password-notset")
     parser.addoption("--distro", action="store", default="distro")
     parser.addoption("--arch", action="store", default="unset-arch")
-    parser.addoption("--version", action="store")
+    parser.addoption("--ver", action="store")
 
 
 @pytest.fixture(scope='session')
@@ -69,7 +69,7 @@ def ui_mode(request):
 
 @pytest.fixture(scope='session')
 def version(request):
-    return request.config.getoption("--version")
+    return request.config.getoption("--ver")
 
 
 @pytest.fixture(scope='session')
