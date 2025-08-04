@@ -20,7 +20,7 @@ arch_go_to_debian={
 }
 
 arch_cpu_to_go={
-    "aarch64": "amd64",
+    "aarch64": "arm64",
     "armv7l": "arm",
     "x86_64": "amd64",
 }
