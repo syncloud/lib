@@ -9,10 +9,16 @@ from syncloudlib.integration.selenium_wrapper import SeleniumWrapper
 import logging
 log = logging.getLogger()
 
-snap_arch={
+arch_go_to_debian={
     "amd64": "amd64",
     "arm": "armhf",
     "arm64": "arm64",
+}
+
+arch_cpu_to_go={
+    "aarch64": "amd64",
+    "armv7l": "arm",
+    "x86_64": "amd64",
 }
 
 def pytest_addoption(parser):
