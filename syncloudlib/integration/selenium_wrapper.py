@@ -6,7 +6,8 @@ from syncloudlib.integration.screenshots import screenshots
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
-
+import logging
+log = logging.getLogger()
 
 class SeleniumWrapper:
     def __init__(self, driver, ui_mode, screenshot_dir, app_domain, timeout, browser):
@@ -101,19 +102,19 @@ class SeleniumWrapper:
                         return
                 retry += 1
                 time.sleep(1)
-                print('retrying screenshot {0}'.format(retry))
+                log.debug('retrying screenshot {0}'.format(retry))
 
     def open_app(self, path=''):
         self.driver.get("https://{0}{1}".format(self.app_domain, path))
 
     def log(self):
         if self.browser != "chrome":
-            print("browser logs are only supported in chrome")
+            log.debug("browser logs are only supported in chrome")
             return
 
-        print("browser log")
+        log.debug("browser log")
         for entry in self.driver.get_log('browser'):
-            print(entry)
+            log.debug(entry)
 
     @retry(exceptions=Exception, tries=10, delay=1, backoff=2)
     def element_by_js(self, js):

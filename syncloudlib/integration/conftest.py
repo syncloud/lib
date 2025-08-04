@@ -1,12 +1,16 @@
-import pytest
+import logging
 import os
+import platform
 from os.path import join, exists
+
+import pytest
 from selenium import webdriver
 
-from syncloudlib.integration.installer import get_data_dir, get_app_dir, get_service_prefix, get_ssh_env_vars, get_snap_data_dir
 from syncloudlib.integration.device import Device
+from syncloudlib.integration.installer import get_data_dir, get_app_dir, get_service_prefix, get_ssh_env_vars, \
+    get_snap_data_dir
 from syncloudlib.integration.selenium_wrapper import SeleniumWrapper
-import logging
+
 log = logging.getLogger()
 
 arch_go_to_debian={
@@ -34,7 +38,7 @@ def pytest_addoption(parser):
     parser.addoption("--redirect-user", action="store", default="redirect-user-notset")
     parser.addoption("--redirect-password", action="store", default="redirect-password-notset")
     parser.addoption("--distro", action="store", default="distro")
-    parser.addoption("--arch", action="store", default="unset-arch")
+    parser.addoption("--arch", action="store")
     parser.addoption("--ver", action="store")
 
 
@@ -127,7 +131,10 @@ def distro(request):
 
 @pytest.fixture(scope='session')
 def arch(request):
-    return request.config.getoption("--arch")
+    arch = request.config.getoption("--arch")
+    if arch:
+        return arch
+    return arch_cpu_to_go[platform.machine()]
 
 
 @pytest.fixture(scope='session')
