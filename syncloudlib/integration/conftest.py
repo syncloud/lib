@@ -84,10 +84,11 @@ def version(request):
 
 @pytest.fixture(scope='session')
 def app_archive_path(request, app, version, arch):
+    debian_arch=arch_go_to_debian[arch]
     archive_path = request.config.getoption("--app-archive-path")
     if archive_path:
         return archive_path
-    archive_path = f'{app}_{version}_{arch}.snap'
+    archive_path = f'{app}_{version}_{debian_arch}.snap'
     if exists(archive_path):
         log.info(f'found app archive: {archive_path}')
         return archive_path
