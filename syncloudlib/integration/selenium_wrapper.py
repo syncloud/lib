@@ -81,6 +81,7 @@ class SeleniumWrapper:
             self.wait_driver.until(method)
             return True
         except Exception as e:
+            log.warn(e)
             self.screenshot('exception', throw)
             if throw:
                 raise e
@@ -102,7 +103,7 @@ class SeleniumWrapper:
                         return
                 retry += 1
                 time.sleep(1)
-                log.debug('retrying screenshot {0}'.format(retry))
+                log.warn('retrying screenshot {0}'.format(retry))
 
     def open_app(self, path=''):
         self.driver.get("https://{0}{1}".format(self.app_domain, path))
@@ -112,9 +113,9 @@ class SeleniumWrapper:
             log.debug("browser logs are only supported in chrome")
             return
 
-        log.debug("browser log")
+        log.info("browser log")
         for entry in self.driver.get_log('browser'):
-            log.debug(entry)
+            log.info(entry)
 
     @retry(exceptions=Exception, tries=10, delay=1, backoff=2)
     def element_by_js(self, js):
@@ -125,4 +126,8 @@ class SeleniumWrapper:
         except Exception:
             self.screenshot('exception')
             raise
+
+
+
+
 
