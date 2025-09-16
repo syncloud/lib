@@ -44,6 +44,7 @@ class SeleniumWrapper:
         self.wait_or_screenshot(expected_conditions.invisibility_of_element_located((by, value)))
 
     def click_by(self, by, value):
+        log.info('click_by')
         #self.wait_or_screenshot(expected_conditions.element_to_be_clickable((by, value)))
         self.wait_or_screenshot(expected_conditions.presence_of_element_located((by, value)))
         try:
@@ -77,6 +78,7 @@ class SeleniumWrapper:
 
     @retry(exceptions=Exception, tries=3, delay=1, backoff=2)
     def wait_or_screenshot(self, method, throw=True):
+        log.info('wait_or_screenshot')
         try:
             self.wait_driver.until(method)
             return True
@@ -89,6 +91,7 @@ class SeleniumWrapper:
                 return False
 
     def screenshot(self, name, throw=True):
+        log.info('screenshot')
         retries = 5
         retry = 0
         while True:
