@@ -1,6 +1,6 @@
 import time
 
-from retry import retry
+from retrying import retry
 
 from syncloudlib.integration.screenshots import screenshots
 from selenium.webdriver.support.ui import WebDriverWait
@@ -76,7 +76,7 @@ class SeleniumWrapper:
             self.screenshot('exception', False)
             return False
 
-    @retry(exceptions=Exception, tries=3, delay=1, backoff=2)
+    @retry(stop_max_attempt_number=3, wait_fixed=2000)
     def wait_or_screenshot(self, method, throw=True):
         log.info('wait_or_screenshot')
         try:
@@ -120,7 +120,7 @@ class SeleniumWrapper:
         for entry in self.driver.get_log('browser'):
             log.info(entry)
 
-    @retry(exceptions=Exception, tries=10, delay=1, backoff=2)
+    @retry(stop_max_attempt_number=10, wait_fixed=2000)
     def element_by_js(self, js):
         try:
             elem = self.driver.execute_script('return ' + js)
@@ -129,8 +129,4 @@ class SeleniumWrapper:
         except Exception:
             self.screenshot('exception')
             raise
-
-
-
-
 
