@@ -109,7 +109,9 @@ class SeleniumWrapper:
                 log.warn('retrying screenshot {0}'.format(retry))
 
     def open_app(self, path=''):
-        self.driver.get("https://{0}{1}".format(self.app_domain, path))
+        url = "https://{0}{1}".format(self.app_domain, path)
+        log.info('opening: ' + url)
+        self.driver.get(url)
 
     def log(self):
         if self.browser != "chrome":
