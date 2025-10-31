@@ -38,6 +38,7 @@ class SeleniumWrapper:
         try:
             return parent.find_element(by, value)
         except Exception as e:
+            log.warning(e)
             self.screenshot('exception', True)
 
     def invisible_by(self, by, value):
@@ -50,6 +51,7 @@ class SeleniumWrapper:
         try:
             self.driver.find_element(by, value).click()
         except Exception as e:
+            log.warning(e)
             self.screenshot('exception', True)
 
     def clickable_by(self, by, value):
@@ -57,6 +59,7 @@ class SeleniumWrapper:
         try:
             return self.driver.find_element(by, value)
         except Exception as e:
+            log.warning(e)
             self.screenshot('exception', True)
 
     def present_by(self, by, value):
@@ -64,6 +67,7 @@ class SeleniumWrapper:
         try:
             return self.driver.find_element(by, value)
         except Exception as e:
+            log.warning(e)
             self.screenshot('exception', True)
 
     def exists_by(self, by, value, timeout=10):
@@ -72,7 +76,8 @@ class SeleniumWrapper:
         try:
             driver.until(cond)
             return True
-        except Exception as _:
+        except Exception as e:
+            log.warning(e)
             self.screenshot('exception', False)
             return False
 
@@ -83,7 +88,7 @@ class SeleniumWrapper:
             self.wait_driver.until(method)
             return True
         except Exception as e:
-            log.warn(e)
+            log.warning(e)
             self.screenshot('exception', throw)
             if throw:
                 raise e
@@ -93,20 +98,21 @@ class SeleniumWrapper:
     def screenshot(self, name, throw=True):
         log.info('screenshot')
         retries = 5
-        retry = 0
+        retry_counter = 0
         while True:
             try:
                 screenshots(self.driver, self.screenshot_dir, '{}-{}'.format(name, self.ui_mode))
                 break
             except Exception as e:
-                if retry >= retries:
+                log.warning(e)
+                if retry_counter >= retries:
                     if throw:
                         raise
                     else:
                         return
-                retry += 1
+                retry_counter += 1
                 time.sleep(1)
-                log.warn('retrying screenshot {0}'.format(retry))
+                log.warning('retrying screenshot {0}'.format(retry_counter))
 
     def open_app(self, path=''):
         url = "https://{0}{1}".format(self.app_domain, path)
@@ -128,7 +134,8 @@ class SeleniumWrapper:
             elem = self.driver.execute_script('return ' + js)
             self.driver.execute_script("arguments[0].scrollIntoView();", elem)
             return elem
-        except Exception:
+        except Exception as e:
+            log.warning("js error: " + str(e))
             self.screenshot('exception')
             raise
 

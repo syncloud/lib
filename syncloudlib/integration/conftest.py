@@ -34,7 +34,7 @@ def pytest_addoption(parser):
     parser.addoption("--device-user", action="store", default="user")
     parser.addoption("--build-number", action="store", default="local")
     parser.addoption("--browser", action="store", default="firefox")
-    parser.addoption("--browser-height", action="store", default=1000)
+    parser.addoption("--browser-height", action="store", default=3000)
     parser.addoption("--redirect-user", action="store", default="redirect-user-notset")
     parser.addoption("--redirect-password", action="store", default="redirect-password-notset")
     parser.addoption("--distro", action="store", default="distro")
@@ -169,9 +169,7 @@ def service_prefix():
 
 
 def new_firefox_driver(hub_url, ui_mode):
-    #desktop_agent = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:104.0) Gecko/20100101 Firefox/100.0"
     mobile_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_1_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Mobile/15E148 Safari/604.1"
-        
     options = webdriver.FirefoxOptions()
     options.set_preference('app.update.auto', False)
     options.set_preference('app.update.enabled', False)
@@ -190,9 +188,7 @@ def new_firefox_driver(hub_url, ui_mode):
 
 
 def new_chrome_driver(hub_url, ui_mode):
-    #desktop_agent = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:104.0) Gecko/20100101 Firefox/100.0"
     mobile_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_1_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Mobile/15E148 Safari/604.1"
- 
     options = webdriver.ChromeOptions()
     if ui_mode == "mobile":
         options.add_argument('user-agent={}'.format(mobile_agent))
@@ -250,29 +246,29 @@ def device(domain, device_user,
 
 @pytest.fixture(scope="session")
 def log_dir(project_dir):
-    dir = join(project_dir, 'log')
-    if not exists(dir):
-        os.mkdir(dir)
-    return dir
+    log_dir = join(project_dir, 'log')
+    if not exists(log_dir):
+        os.mkdir(log_dir)
+    return log_dir
 
 
 @pytest.fixture(scope="session")
 def artifact_dir(project_dir, distro):
-    dir = join(project_dir, 'artifact', distro)
-    if not exists(dir):
-        os.mkdir(dir)
-    return dir
+    artifact_dir = join(project_dir, 'artifact', distro)
+    if not exists(artifact_dir):
+        os.mkdir(artifact_dir)
+    return artifact_dir
 
 
 @pytest.fixture(scope="session")
-def screenshot_dir(artifact_dir, ui_mode):
+def screenshot_dir(artifact_dir: str, ui_mode: str):
     ui_dir = join(artifact_dir, ui_mode)
     if not exists(ui_dir):
         os.mkdir(ui_dir)
-    dir = join(ui_dir, 'screenshot')
-    if not exists(dir):
-        os.mkdir(dir)
-    return dir
+    screenshot_dir = join(ui_dir, 'screenshot')
+    if not exists(screenshot_dir):
+        os.mkdir(screenshot_dir)
+    return screenshot_dir
 
 
 @pytest.fixture(scope="session")
