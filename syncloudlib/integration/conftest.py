@@ -34,7 +34,7 @@ def pytest_addoption(parser):
     parser.addoption("--device-user", action="store", default="user")
     parser.addoption("--build-number", action="store", default="local")
     parser.addoption("--browser", action="store", default="firefox")
-    parser.addoption("--browser-height", action="store", default=3000)
+    parser.addoption("--browser-height", action="store", default=2000)
     parser.addoption("--redirect-user", action="store", default="redirect-user-notset")
     parser.addoption("--redirect-password", action="store", default="redirect-password-notset")
     parser.addoption("--distro", action="store", default="distro")
