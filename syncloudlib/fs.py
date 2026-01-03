@@ -36,9 +36,10 @@ def chownrecursive(path, user):
     if estimate_count > 1000:
         return 'not changing permissions, too many files'
 
-    return check_output('chown -RLf {0}. {1}'.format(user, path), shell=True).decode()
+    return check_output('chown -R {0}:{0} {1}'.format(user, path), shell=True).decode()
 
 
 def touchfile(file):
     with open(file, 'a'):
         utime(file, None)
+
