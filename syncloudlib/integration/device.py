@@ -25,8 +25,8 @@ class Device:
     def activate(self, channel="stable"):
         ip = socket.gethostbyname(self.domain)
         run_ssh(self.domain, 'echo "{0} auth.{1}" >> /etc/hosts'.format(ip, self.domain), password=self.ssh_password, retries=10)
-        run_ssh(self.domain, '/snap/platform/current/bin/upgrade-snapd.sh {0}'.format(channel), password=self.ssh_password, retries=10)
-        run_ssh(self.domain, 'snap refresh platform --channel={0}'.format(channel), password=self.ssh_password, retries=10)
+        #run_ssh(self.domain, '/snap/platform/current/bin/upgrade-snapd.sh {0}'.format(channel), password=self.ssh_password, retries=10)
+        #run_ssh(self.domain, 'snap refresh platform --channel={0}'.format(channel), password=self.ssh_password, retries=10)
 
         wait_for_rest(requests.session(), "https://{0}/rest/id".format(self.domain), 200, 10)
 
@@ -44,8 +44,8 @@ class Device:
     def activate_custom(self, channel="stable"):
         ip = socket.gethostbyname(self.domain)
         run_ssh(self.domain, 'echo "{0} auth.{1}" >> /etc/hosts'.format(ip, self.domain), password=self.ssh_password, retries=10)
-        run_ssh(self.domain, '/snap/platform/current/bin/upgrade-snapd.sh {0}'.format(channel), password=self.ssh_password, retries=10)
-        run_ssh(self.domain, 'snap refresh platform --channel={0}'.format(channel), password=self.ssh_password, retries=10)
+        #run_ssh(self.domain, '/snap/platform/current/bin/upgrade-snapd.sh {0}'.format(channel), password=self.ssh_password, retries=10)
+        #run_ssh(self.domain, 'snap refresh platform --channel={0}'.format(channel), password=self.ssh_password, retries=10)
 
         wait_for_rest(requests.session(), "https://{0}/rest/id".format(self.domain), 200, 10)
         response = requests.post('https://{0}/rest/activate/custom'.format(self.domain),
