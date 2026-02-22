@@ -57,7 +57,7 @@ def wait_for_installer(web_session, host, attempts=60, throw_on_error=False):
                 if throw_on_error:
                     raise Exception("error http status code: {0}".format(response.status_code))
         except Exception as e:
-            print(e.message)
+            print(e)
             if throw_on_error:
                 raise e
             
