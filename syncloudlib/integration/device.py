@@ -107,5 +107,31 @@ class Device:
         return run_scp('-r {0} root@{1}:{2}'.format(dir_from, self.domain, dir_to), password=self.ssh_password,
                        throw=throw)
 
+    def login_v2(self, retries=5):
+        session = requests.session()
+        session.mount('https://{0}'.format(self.domain), HTTPAdapter(max_retries=retries))
+        retry = 0
+        while True:
+            try:
+                token = run_ssh(self.domain,
+                                'snap run platform.cli login {0} {1}'.format(self.device_user, self.device_password),
+                                password=self.ssh_password)
+                token = token.strip()
+                response = session.post('https://{0}/rest/login/token'.format(self.domain), verify=False,
+                                        allow_redirects=False, json={'token': token})
+                if response.status_code != 200:
+                    raise Exception('token login failed: {0}'.format(response.text))
+                response = session.get('https://{0}/rest/user'.format(self.domain), verify=False,
+                                       allow_redirects=False)
+                if response.status_code == 200:
+                    self.session = session
+                    return session
+            except Exception as e:
+                print(str(e))
+                print('retry {0} of {1}'.format(retry, retries))
+            retry += 1
+            if retry > retries:
+                raise Exception('cannot login')
+
     def http_get(self, url):
         return self.session.get('https://{0}{1}'.format(self.domain, url), allow_redirects=False, verify=False)
