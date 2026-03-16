@@ -97,6 +97,8 @@ class SeleniumWrapper:
 
     def screenshot(self, name, throw=True):
         log.info('screenshot')
+        self.driver.find_element(By.TAG_NAME, "body").click()
+        time.sleep(1)
         retries = 5
         retry_counter = 0
         while True:
