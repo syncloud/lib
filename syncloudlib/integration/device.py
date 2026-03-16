@@ -25,8 +25,6 @@ class Device:
     def activate(self, channel="stable"):
         ip = socket.gethostbyname(self.domain)
         run_ssh(self.domain, 'echo "{0} auth.{1}" >> /etc/hosts'.format(ip, self.domain), password=self.ssh_password, retries=10)
-        #run_ssh(self.domain, '/snap/platform/current/bin/upgrade-snapd.sh {0}'.format(channel), password=self.ssh_password, retries=10)
-        #run_ssh(self.domain, 'snap refresh platform --channel={0}'.format(channel), password=self.ssh_password, retries=10)
 
         wait_for_rest(requests.session(), "https://{0}/rest/id".format(self.domain), 200, 10)
 
@@ -44,8 +42,6 @@ class Device:
     def activate_custom(self, channel="stable"):
         ip = socket.gethostbyname(self.domain)
         run_ssh(self.domain, 'echo "{0} auth.{1}" >> /etc/hosts'.format(ip, self.domain), password=self.ssh_password, retries=10)
-        #run_ssh(self.domain, '/snap/platform/current/bin/upgrade-snapd.sh {0}'.format(channel), password=self.ssh_password, retries=10)
-        #run_ssh(self.domain, 'snap refresh platform --channel={0}'.format(channel), password=self.ssh_password, retries=10)
 
         wait_for_rest(requests.session(), "https://{0}/rest/id".format(self.domain), 200, 10)
         response = requests.post('https://{0}/rest/activate/custom'.format(self.domain),
@@ -62,7 +58,7 @@ class Device:
 
     def login(self, retries=5):
         session = requests.session()
-        session.mount('https://{0}'.format(self.domain), HTTPAdapter(max_retries=retries)) 
+        session.mount('https://{0}'.format(self.domain), HTTPAdapter(max_retries=retries))
         retry = 0
         while True:
             try:
@@ -78,7 +74,8 @@ class Device:
                 print('retry {0} of {1}'.format(retry, retries))
             retry += 1
             if retry > retries:
-                raise Exception('cannot login')
+                print('login v1 failed, trying v2')
+                return self.login_v2(retries=retries)
 
     def app_remove(self, app, attempts=200):
         response = self.session.post('https://{0}/rest/app/remove'.format(self.domain), json={'app_id': app},
