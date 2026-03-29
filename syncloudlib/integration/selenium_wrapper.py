@@ -114,6 +114,12 @@ class SeleniumWrapper:
                 time.sleep(1)
                 log.warning('retrying screenshot {0}'.format(retry_counter))
 
+    def login_oidc(self, username, password):
+        self.find_by(By.ID, "username-textfield").send_keys(username)
+        self.find_by(By.ID, "password-textfield").send_keys(password)
+        self.screenshot('login')
+        self.find_by(By.ID, "sign-in-button").click()
+
     def open_app(self, path=''):
         url = "https://{0}{1}".format(self.app_domain, path)
         log.info('opening: ' + url)
