@@ -43,7 +43,7 @@ class Device:
         ip = socket.gethostbyname(self.domain)
         run_ssh(self.domain, 'echo "{0} auth.{1}" >> /etc/hosts'.format(ip, self.domain), password=self.ssh_password, retries=10)
         run_ssh(self.domain, 'snap set system refresh.hold=$(date -d "+90 days" -u +%Y-%m-%dT%H:%M:%SZ)', password=self.ssh_password)
-        run_ssh(self.domain, 'rm -f /var/snap/platform/current/syncloud.crt', password=self.ssh_password)
+        run_ssh(self.domain, 'snap run platform.cli cert --fake', password=self.ssh_password)
 
         wait_for_rest(requests.session(), "https://{0}/rest/id".format(self.domain), 200, 10)
         response = requests.post('https://{0}/rest/activate/custom'.format(self.domain),
